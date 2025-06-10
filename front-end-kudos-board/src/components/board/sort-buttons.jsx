@@ -1,16 +1,15 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 import { useTheme } from "../../hooks/use-theme";
 import "./sort-buttons.css";
 
-export default function SortButtons() {
+export default function SortButtons({ categoryInput, setCategoryInput }) {
 	const { colors } = useTheme();
-	const [activeFilter, setActiveFilter] = useState("All");
 
 	const filters = [
 		"All",
 		"Recent",
 		"Celebration",
-		"Thank You",
+		"Thank_You",
 		"Inspiration",
 	];
 
@@ -20,10 +19,10 @@ export default function SortButtons() {
 				<button
 					key={filter}
 					className="sort-buttons"
-					onClick={() => setActiveFilter(filter)}
+					onClick={() => setCategoryInput(filter)}
 					style={{
 						border:
-							activeFilter === filter
+							categoryInput === filter
 								? `2px solid ${colors.button}`
 								: `1px solid ${colors.border}`,
 						background: colors.card,
@@ -35,3 +34,8 @@ export default function SortButtons() {
 		</div>
 	);
 }
+
+SortButtons.propTypes = {
+	categoryInput: PropTypes.string.isRequired,
+	setCategoryInput: PropTypes.func.isRequired,
+};

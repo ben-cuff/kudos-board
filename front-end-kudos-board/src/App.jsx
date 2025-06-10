@@ -11,24 +11,55 @@ function App() {
 	const { colors } = useTheme();
 	const [boardData, setBoardData] = useState([]);
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
+	const [categoryInput, setCategoryInput] = useState("All");
 
 	document.body.style.backgroundColor = colors.background;
-	const baseUrl = import.meta.env.VITE_BASE_URL;
 
 	useEffect(() => {
 		fetchBoardData();
 	}, []);
 
+	useEffect(() => {
+		if (categoryInput === "All") {
+			fetchBoardData();
+		} else if (categoryInput === "Recent") {
+			setBoardData((prevData) =>
+				[...prevData]
+					.sort(
+						(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+					)
+					.slice(0, 6)
+			);
+		} else {
+			(async () => {
+				await fetchBoardsByCategory(categoryInput);
+			})();
+		}
+	}, [categoryInput]);
+
+	async function fetchBoardsByCategory(category) {
+		try {
+			const response = await fetch(
+				`${
+					import.meta.env.VITE_BASE_URL
+				}/board?category=${category.toUpperCase()}`
+			);
+			const data = await response.json();
+			setBoardData(data);
+		} catch (error) {
+			console.error("Failed to fetch boards by category:", error);
+		}
+	}
+
 	async function fetchBoardData() {
-		const baseUrl = import.meta.env.VITE_BASE_URL;
-		const response = await fetch(`${baseUrl}/board`);
+		const response = await fetch(`${import.meta.env.VITE_BASE_URL}/board`);
 		const data = await response.json();
 
 		setBoardData(data);
 	}
 
 	const handleDeleteBoard = async (boardId) => {
-		await fetch(`${baseUrl}/board/${boardId}`, {
+		await fetch(`${import.meta.env.VITE_BASE_URL}/board/${boardId}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -46,7 +77,7 @@ function App() {
 		const author = e.target.author.value || "";
 		const image = e.target.image.value || "";
 
-		await fetch(`${baseUrl}/board`, {
+		await fetch(`${import.meta.env.VITE_BASE_URL}/board`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -65,7 +96,10 @@ function App() {
 				<h1 style={{ color: colors.primary }}>👏Kudos Board👏</h1>
 			</header>
 			<SearchBar />
-			<SortButtons />
+			<SortButtons
+				categoryInput={categoryInput}
+				setCategoryInput={setCategoryInput}
+			/>
 			<div className="create-theme-container">
 				<button
 					className="create-btn"
