@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import "./App.css";
+import CreateModal from "./components/board/create-modal";
 import SearchBar from "./components/board/search-bar";
 import SortButtons from "./components/board/sort-buttons";
 import ChangeTheme from "./components/change-theme";
@@ -7,6 +9,22 @@ import { useTheme } from "./hooks/use-theme";
 function App() {
 	const { colors } = useTheme();
 	document.body.style.backgroundColor = colors.background;
+
+	const [boardData, setBoardData] = useState([]);
+	const [toggleCreateModal, setToggleCreateModal] = useState(false);
+
+	useEffect(() => {
+		(async () => {
+			const baseUrl = import.meta.env.VITE_BASE_URL;
+			const response = await fetch(`${baseUrl}/board`);
+			const data = await response.json();
+
+			console.log(data);
+
+			setBoardData(data);
+		})();
+	}, []);
+
 	return (
 		<div className="container">
 			<header className="header-container">
@@ -21,11 +39,15 @@ function App() {
 						background: colors.button,
 						color: colors.background,
 					}}
+					onClick={() => {
+						setToggleCreateModal(!toggleCreateModal);
+					}}
 				>
 					Create a New Board
 				</button>
 				<ChangeTheme />
 			</div>
+			{toggleCreateModal && <CreateModal setToggleCreateModal />}
 		</div>
 	);
 }
