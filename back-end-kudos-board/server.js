@@ -14,7 +14,19 @@ app.get("/", (req, res) => {
 
 app.get("/board", async (req, res) => {
 	try {
-		const boards = await prisma.board.findMany();
+		const { category } = req.query;
+		const where = {};
+
+		if (category) {
+			if (!CATEGORIES.includes(category)) {
+				return res
+					.status(400)
+					.json({ error: "Invalid category provided" });
+			}
+			where.category = category;
+		}
+
+		const boards = await prisma.board.findMany({ where });
 
 		if (boards) {
 			res.status(200).json(boards);
