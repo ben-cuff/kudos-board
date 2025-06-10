@@ -31,6 +31,34 @@ app.get("/board", async (req, res) => {
 	}
 });
 
+app.get("/board/:boardId", async (req, res) => {
+	try {
+		const { boardId } = req.params;
+		if (!boardId) {
+			return res.status(400).json({
+				error: "Missing board ID in path parameter",
+			});
+		}
+
+		const board = await prisma.board.findUnique({
+			where: { id: Number(boardId) },
+		});
+
+		if (board) {
+			res.status(200).json(board);
+		} else {
+			res.status(404).json({
+				error: "Not Found: Board with that ID does not exist",
+			});
+		}
+	} catch (error) {
+		res.status(500).json({
+			message: "An unexpected server error occurred",
+			error,
+		});
+	}
+});
+
 app.post("/board", async (req, res) => {
 	try {
 		const { title, image, category } = req.body;
@@ -79,6 +107,208 @@ app.delete("/board/:boardId", async (req, res) => {
 				error: "Not Found: Board with that ID does not exist",
 			});
 		}
+	} catch (error) {
+		res.status(500).json({
+			message: "An unexpected server error occurred",
+			error,
+		});
+	}
+});
+
+app.get("/board/:boardId/card", async (req, res) => {
+	try {
+		const { boardId } = req.params;
+		if (!boardId) {
+			res.status(400).json({
+				error: "Missing board ID in path parameter",
+			});
+			return;
+		}
+
+		try {
+			const cards = await prisma.card.findMany({
+				where: {
+					boardId: Number(boardId),
+				},
+			});
+
+			res.status(200).json(cards);
+		} catch (error) {
+			res.status(404).json({
+				error: "Not Found: No cards found for that board ID or that board ID does not exist",
+			});
+		}
+	} catch (error) {
+		res.status(500).json({
+			message: "An unexpected server error occurred",
+			error,
+		});
+	}
+});
+
+app.post("/board/:boardId/card", async (req, res) => {
+	try {
+		const { boardId } = req.params;
+		if (!boardId) {
+			res.status(400).json({
+				error: "Missing board ID in path parameter",
+			});
+			return;
+		}
+
+		try {
+			await prisma.board.findUnique({ where: { id: Number(boardId) } });
+		} catch (error) {
+			res.status(404).json({
+				error: "Not Found: No board with the provided board ID",
+			});
+			return;
+		}
+
+		const {
+			message,
+			gif,
+			upvotes = 0,
+			pinned = false,
+			pinnedAt,
+		} = req.body;
+
+		if (!message || !gif) {
+			res.status(400).json({
+				error: "Missing required fields: message and gif",
+			});
+			return;
+		}
+
+		const data = {
+			message,
+			gif,
+			upvotes,
+			boardId: Number(boardId),
+			pinned,
+		};
+
+		if (pinnedAt) {
+			data.pinnedAt = new Date(pinnedAt);
+		}
+
+		const card = await prisma.card.create({
+			data,
+		});
+
+		res.status(201).json(card);
+	} catch (error) {
+		res.status(500).json({
+			message: "An unexpected server error occurred",
+			error,
+		});
+	}
+});
+
+app.get("/board/:boardId/card/:cardId", async (req, res) => {
+	try {
+		const { boardId, cardId } = req.params;
+		if (!boardId || !cardId) {
+			return res.status(400).json({
+				error: "Missing board or card ID in path parameters",
+			});
+		}
+
+		const card = await prisma.card.findUnique({
+			where: {
+				id: Number(cardId),
+				boardId: Number(boardId),
+			},
+		});
+
+		if (!card) {
+			return res.status(404).json({
+				error: "Card not found for the provided board ID",
+			});
+		}
+
+		res.status(200).json(card);
+	} catch (error) {
+		res.status(500).json({
+			message: "An unexpected server error occurred",
+			error,
+		});
+	}
+});
+
+app.patch("/board/:boardId/card/:cardId", async (req, res) => {
+	try {
+		const { boardId, cardId } = req.params;
+		const { operation } = req.body;
+
+		if (!boardId || !cardId) {
+			return res.status(400).json({
+				error: "Missing board or card ID in path parameters",
+			});
+		}
+
+		if (
+			!operation ||
+			(operation !== "upvote" && operation !== "downvote")
+		) {
+			return res.status(400).json({
+				error: "Invalid or missing operation. Must be 'upvote' or 'downvote'",
+			});
+		}
+
+		const card = await prisma.card.findUnique({
+			where: {
+				id: Number(cardId),
+				boardId: Number(boardId),
+			},
+		});
+
+		if (!card) {
+			return res.status(404).json({
+				error: "Card not found for the provided board ID",
+			});
+		}
+
+		const incrementValue = operation === "upvote" ? 1 : -1;
+
+		const updatedCard = await prisma.card.update({
+			where: { id: Number(cardId) },
+			data: { upvotes: { increment: incrementValue } },
+		});
+
+		res.status(200).json(updatedCard);
+	} catch (error) {
+		res.status(500).json({
+			message: "An unexpected server error occurred",
+			error,
+		});
+	}
+});
+
+app.delete("/board/:boardId/card/:cardId", async (req, res) => {
+	try {
+		const { boardId, cardId } = req.params;
+		if (!boardId || !cardId) {
+			return res.status(400).json({
+				error: "Missing board or card ID in path parameters",
+			});
+		}
+
+		const card = await prisma.card.findUnique({
+			where: {
+				id: Number(cardId),
+				boardId: Number(boardId),
+			},
+		});
+
+		if (!card) {
+			return res.status(404).json({
+				error: "Card not found for the provided board ID",
+			});
+		}
+
+		await prisma.card.delete({ where: { id: Number(cardId) } });
+		res.status(200).json({ message: "Card deleted successfully" });
 	} catch (error) {
 		res.status(500).json({
 			message: "An unexpected server error occurred",
