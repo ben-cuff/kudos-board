@@ -14,7 +14,7 @@ ReactDOM.createRoot(root).render(
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<App />} />
-					<Route path="/:cardId" element={<Card />} />
+					<Route path="/:boardId" element={<Card />} />
 				</Routes>
 			</BrowserRouter>
 		</ThemeProvider>
