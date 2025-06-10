@@ -1,13 +1,21 @@
 import propTypes, { object } from "prop-types";
 import BoardCard from "./board-card";
 
-export default function BoardList({ boardData }) {
+export default function BoardList({ boardData, handleDeleteBoard }) {
 	return (
 		<div
-			style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
+			style={{
+				display: "flex",
+				flexDirection: "row",
+				flexWrap: "wrap",
+			}}
 		>
 			{boardData.map((board, index) => (
-				<BoardCard key={index} board={board} />
+				<BoardCard
+					key={index}
+					board={board}
+					handleDeleteBoard={handleDeleteBoard}
+				/>
 			))}
 		</div>
 	);
@@ -15,4 +23,5 @@ export default function BoardList({ boardData }) {
 
 BoardList.propTypes = {
 	boardData: propTypes.arrayOf(object).isRequired,
+	handleDeleteBoard: propTypes.func.isRequired,
 };

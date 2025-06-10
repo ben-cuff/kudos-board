@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import "./board-card.css";
 
-export default function BoardCard({ board }) {
+export default function BoardCard({ board, handleDeleteBoard }) {
 	return (
 		<div className="board-card">
 			<img src={board.image} alt={board.title} className="board-image" />
@@ -9,7 +9,9 @@ export default function BoardCard({ board }) {
 			<h3 className="board-category">{board.category}</h3>
 			<div className="btns-container">
 				<button>View Board</button>
-				<button>Delete Board</button>
+				<button onClick={() => handleDeleteBoard(board.id)}>
+					Delete Board
+				</button>
 			</div>
 		</div>
 	);
@@ -17,4 +19,5 @@ export default function BoardCard({ board }) {
 
 BoardCard.propTypes = {
 	board: propTypes.object.isRequired,
+	handleDeleteBoard: propTypes.func.isRequired,
 };

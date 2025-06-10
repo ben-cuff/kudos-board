@@ -9,20 +9,55 @@ import { useTheme } from "./hooks/use-theme";
 
 function App() {
 	const { colors } = useTheme();
-	document.body.style.backgroundColor = colors.background;
-
 	const [boardData, setBoardData] = useState([]);
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
 
-	useEffect(() => {
-		(async () => {
-			const baseUrl = import.meta.env.VITE_BASE_URL;
-			const response = await fetch(`${baseUrl}/board`);
-			const data = await response.json();
+	document.body.style.backgroundColor = colors.background;
+	const baseUrl = import.meta.env.VITE_BASE_URL;
 
-			setBoardData(data);
-		})();
+	useEffect(() => {
+		fetchBoardData();
 	}, []);
+
+	async function fetchBoardData() {
+		const baseUrl = import.meta.env.VITE_BASE_URL;
+		const response = await fetch(`${baseUrl}/board`);
+		const data = await response.json();
+
+		setBoardData(data);
+	}
+
+	const handleDeleteBoard = async (boardId) => {
+		await fetch(`${baseUrl}/board/${boardId}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		setBoardData((prevData) =>
+			prevData.filter((board) => board.id !== boardId)
+		);
+	};
+
+	const handleSubmitCreateModal = async (e) => {
+		e.preventDefault();
+		const title = e.target.title.value;
+		const category = e.target.category.value;
+		const author = e.target.author.value || "";
+		const image = e.target.image.value || "";
+
+		await fetch(`${baseUrl}/board`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ title, category, author, image }),
+		});
+
+		e.target.reset();
+		await fetchBoardData();
+		setToggleCreateModal(false);
+	};
 
 	return (
 		<div className="container">
@@ -47,9 +82,19 @@ function App() {
 				<ChangeTheme />
 			</div>
 
-			<main>{boardData && <BoardList boardData={boardData} />}</main>
+			<main>
+				{boardData && (
+					<BoardList
+						boardData={boardData}
+						handleDeleteBoard={handleDeleteBoard}
+					/>
+				)}
+			</main>
 			{toggleCreateModal && (
-				<CreateModal setToggleCreateModal={setToggleCreateModal} />
+				<CreateModal
+					setToggleCreateModal={setToggleCreateModal}
+					handleSubmitCreateModal={handleSubmitCreateModal}
+				/>
 			)}
 		</div>
 	);
