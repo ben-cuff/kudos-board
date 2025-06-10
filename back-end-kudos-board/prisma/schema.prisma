@@ -17,6 +17,7 @@ model Board {
   id        Int      @id @default(autoincrement())
   title     String
   image     String
+  author    String?
   category  Category
   createdAt DateTime @default(now())
   Card      Card[]

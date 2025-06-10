@@ -1,6 +1,6 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
-const cors = require('cors');
+const cors = require("cors");
 
 const CATEGORIES = ["CELEBRATION", "THANK_YOU", "INSPIRATION"];
 
@@ -76,7 +76,7 @@ app.get("/board/:boardId", async (req, res) => {
 
 app.post("/board", async (req, res) => {
 	try {
-		const { title, image, category } = req.body;
+		const { title, image, category, author } = req.body;
 		if (!title || !image || !category) {
 			res.status(400).json({
 				error: "Missing required fields: title, image, or category",
@@ -90,7 +90,7 @@ app.post("/board", async (req, res) => {
 		}
 
 		const board = await prisma.board.create({
-			data: { title, image, category },
+			data: { title, image, category, image },
 		});
 		res.status(201).json(board);
 	} catch (error) {
