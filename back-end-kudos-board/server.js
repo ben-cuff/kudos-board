@@ -1,5 +1,6 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
+const cors = require('cors');
 
 const CATEGORIES = ["CELEBRATION", "THANK_YOU", "INSPIRATION"];
 
@@ -7,6 +8,8 @@ const app = express();
 const prisma = new PrismaClient();
 
 app.use(express.json());
+
+app.use(cors());
 
 app.get("/", (req, res) => {
 	res.status(200).json({ message: "Root route" });
