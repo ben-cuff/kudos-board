@@ -4,8 +4,7 @@ import "./create-modal.css";
 
 export default function CreateModal({
 	setToggleCreateModal,
-	handleSubmitCreateModal,
-	handleDeleteBoard,
+	handleSubmitCreateModal
 }) {
 	const { colors } = useTheme();
 
