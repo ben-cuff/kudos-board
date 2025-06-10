@@ -7,13 +7,17 @@ const colorThemes = {
 		primary: "#101010",
 		secondary: "#7f7f7f",
 		background: "#efefef",
+		card: "lightgray",
 		border: "#303030",
+		button: "#0D98BA",
 	},
 	dark: {
 		primary: "#efefef",
 		secondary: "#7f7f7f",
 		background: "#101010",
+		card: "darkgray",
 		border: "#b0b0b0",
+		button: "#0D98BA",
 	},
 };
 
