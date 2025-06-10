@@ -96,11 +96,36 @@ app.delete("/board/:boardId", async (req, res) => {
 			return;
 		}
 
-		//TODO:: ADD DELETION OF CHILD CARDS TOO
 		try {
+			const cards = await prisma.card.findMany({
+				where: { boardId: Number(boardId) },
+				select: { id: true },
+			});
+			const cardIds = cards.map((card) => card.id);
+
+			if (cardIds.length > 0) {
+				await prisma.comment
+					.deleteMany({
+						where: { cardId: { in: cardIds } },
+					})
+					.catch(() => {});
+				await prisma.card
+					.deleteMany({
+						where: { boardId: Number(boardId) },
+					})
+					.catch(() => {});
+			} else {
+				await prisma.card
+					.deleteMany({
+						where: { boardId: Number(boardId) },
+					})
+					.catch(() => {});
+			}
+
 			const deletedBoard = await prisma.board.delete({
 				where: { id: Number(boardId) },
 			});
+
 			res.status(200).json(deletedBoard);
 		} catch (error) {
 			res.status(404).json({
@@ -308,7 +333,90 @@ app.delete("/board/:boardId/card/:cardId", async (req, res) => {
 		}
 
 		await prisma.card.delete({ where: { id: Number(cardId) } });
-		res.status(200).json({ message: "Card deleted successfully" });
+		try {
+			await prisma.comment.deleteMany({
+				where: { cardId: Number(cardId) },
+			});
+		} catch (error) {
+		} finally {
+			res.status(200).json(card);
+		}
+	} catch (error) {
+		res.status(500).json({
+			message: "An unexpected server error occurred",
+			error,
+		});
+	}
+});
+
+app.post("/board/:boardId/card/:cardId/comment", async (req, res) => {
+	try {
+		const { boardId, cardId } = req.params;
+		if (!boardId || !cardId) {
+			return res.status(400).json({
+				error: "Missing board or card ID in path parameters",
+			});
+		}
+
+		const card = await prisma.card.findUnique({
+			where: { id: Number(cardId) },
+		});
+
+		if (!card || card.boardId !== Number(boardId)) {
+			return res.status(404).json({
+				error: "Card not found for the provided board ID",
+			});
+		}
+
+		const { message, author } = req.body;
+		if (!message) {
+			return res.status(400).json({
+				error: "Missing required field: message",
+			});
+		}
+
+		const comment = await prisma.comment.create({
+			data: {
+				message,
+				author,
+				cardId: Number(cardId),
+			},
+		});
+		res.status(201).json(comment);
+	} catch (error) {
+		res.status(500).json({
+			message: "An unexpected server error occurred",
+			error,
+		});
+	}
+});
+
+app.get("/board/:boardId/card/:cardId/comment", async (req, res) => {
+	try {
+		const { boardId, cardId } = req.params;
+		if (!boardId || !cardId) {
+			return res.status(400).json({
+				error: "Missing board or card ID in path parameters",
+			});
+		}
+
+		const card = await prisma.card.findUnique({
+			where: { id: Number(cardId) },
+			include: { comments: true },
+		});
+
+		if (!card || card.boardId !== Number(boardId)) {
+			return res.status(404).json({
+				error: "Card not found for the provided board ID",
+			});
+		}
+
+		res.status(200).json({
+			message: card.message,
+			gif: card.gif,
+			author: card.author,
+			comments: card.comments,
+		});
 	} catch (error) {
 		res.status(500).json({
 			message: "An unexpected server error occurred",
