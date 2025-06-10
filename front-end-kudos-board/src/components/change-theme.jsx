@@ -1,4 +1,5 @@
 import { useTheme } from "../hooks/use-theme";
+import "./change-theme.css";
 
 export default function ChangeTheme() {
 	const { colors, toggleTheme, currentTheme } = useTheme();
@@ -8,9 +9,8 @@ export default function ChangeTheme() {
 			onClick={toggleTheme}
 			style={{
 				backgroundColor: colors.secondary,
-				border: "none",
-				cursor: "pointer",
-			}}
+            }}
+            className="theme-btn"
 		>
 			<img
 				src={
@@ -18,8 +18,8 @@ export default function ChangeTheme() {
 						? "moon-outline.svg"
 						: "sunny-outline.svg"
 				}
-				width="50px"
-				height="50px"
+				width="25px"
+				height="25px"
 			/>
 		</button>
 	);

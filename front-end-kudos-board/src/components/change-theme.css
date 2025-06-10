@@ -1,0 +1,10 @@
+.theme-btn {
+	border: none;
+	cursor: pointer;
+	border-radius: 1000px;
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 5px;
+}
