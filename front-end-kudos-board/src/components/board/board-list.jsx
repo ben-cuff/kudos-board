@@ -1,5 +1,6 @@
 import propTypes, { object } from "prop-types";
 import BoardCard from "./board-card";
+import "./board-list.css";
 
 export default function BoardList({ boardData, handleDeleteBoard }) {
 	if (!boardData || boardData.length === 0) {
@@ -7,13 +8,7 @@ export default function BoardList({ boardData, handleDeleteBoard }) {
 	}
 
 	return (
-		<div
-			style={{
-				display: "flex",
-				flexDirection: "row",
-				flexWrap: "wrap",
-			}}
-		>
+		<div className="boards-container">
 			{boardData.map((board, index) => (
 				<BoardCard
 					key={index}
