@@ -34,7 +34,7 @@ model Card {
   gif      String
   upvotes  Int      @default(0)
   boardId  Int
-  pinned   Boolean
-  pinnedAt DateTime
+  pinned   Boolean   @default(false)
+  pinnedAt DateTime?
   board    Board    @relation(fields: [boardId], references: [id])
 }
