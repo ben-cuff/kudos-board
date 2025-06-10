@@ -18,7 +18,7 @@ const colorThemes = {
 };
 
 export default function useTheme() {
-	const [theme, setTheme] = useState("dark");
+	const [theme, setTheme] = useState("light");
 
 	const toggleTheme = () => {
 		const nextTheme = theme === "dark" ? "light" : "dark";
