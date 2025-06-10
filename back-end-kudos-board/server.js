@@ -310,6 +310,50 @@ app.patch("/board/:boardId/card/:cardId", async (req, res) => {
 	}
 });
 
+app.patch("/board/:boardId/card/:cardId/pin", async (req, res) => {
+	try {
+		const { boardId, cardId } = req.params;
+
+		if (!boardId || !cardId) {
+			return res.status(400).json({
+				error: "Missing board or card ID in path parameters",
+			});
+		}
+
+		const card = await prisma.card.findUnique({
+			where: {
+				id: Number(cardId),
+				boardId: Number(boardId),
+			},
+		});
+
+		if (!card) {
+			return res.status(404).json({
+				error: "Card not found for the provided board ID",
+			});
+		}
+
+		if (card.pinned) {
+			const updatedCard = await prisma.card.update({
+				where: { id: Number(cardId) },
+				data: { pinned: false },
+			});
+			res.status(200).json(updatedCard);
+		} else {
+			const updatedCard = await prisma.card.update({
+				where: { id: Number(cardId) },
+				data: { pinned: true, pinnedAt: new Date() },
+			});
+			res.status(200).json(updatedCard);
+		}
+	} catch (error) {
+		res.status(500).json({
+			message: "An unexpected server error occurred",
+			error,
+		});
+	}
+});
+
 app.delete("/board/:boardId/card/:cardId", async (req, res) => {
 	try {
 		const { boardId, cardId } = req.params;
@@ -333,14 +377,13 @@ app.delete("/board/:boardId/card/:cardId", async (req, res) => {
 		}
 
 		await prisma.card.delete({ where: { id: Number(cardId) } });
-		try {
-			await prisma.comment.deleteMany({
+		await prisma.comment
+			.deleteMany({
 				where: { cardId: Number(cardId) },
-			});
-		} catch (error) {
-		} finally {
-			res.status(200).json(card);
-		}
+			})
+			.catch(() => {});
+
+		res.status(200).json(card);
 	} catch (error) {
 		res.status(500).json({
 			message: "An unexpected server error occurred",
@@ -400,23 +443,17 @@ app.get("/board/:boardId/card/:cardId/comment", async (req, res) => {
 			});
 		}
 
-		const card = await prisma.card.findUnique({
-			where: { id: Number(cardId) },
-			include: { comments: true },
+		const comments = await prisma.comment.findMany({
+			where: { cardId: Number(cardId) },
 		});
 
-		if (!card || card.boardId !== Number(boardId)) {
+		if (!comments) {
 			return res.status(404).json({
-				error: "Card not found for the provided board ID",
+				error: "Comments not found for the provided board ID and card ID",
 			});
 		}
 
-		res.status(200).json({
-			message: card.message,
-			gif: card.gif,
-			author: card.author,
-			comments: card.comments,
-		});
+		res.status(200).json(comments);
 	} catch (error) {
 		res.status(500).json({
 			message: "An unexpected server error occurred",
