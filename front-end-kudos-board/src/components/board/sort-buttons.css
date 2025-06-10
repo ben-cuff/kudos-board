@@ -11,3 +11,7 @@
 	padding-right: 8px;
 	cursor: pointer;
 }
+
+.sort-buttons:hover {
+	cursor: pointer;
+}

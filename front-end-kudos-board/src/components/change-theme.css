@@ -8,3 +8,10 @@
 	justify-content: center;
 	padding: 5px;
 }
+
+.btn-container {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	height: min-content;
+}

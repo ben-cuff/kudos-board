@@ -11,6 +11,10 @@
 	width: 4.5%;
 }
 
+.search-btn:hover {
+	cursor: pointer;
+}
+
 .search-input {
 	margin: 5px;
 	width: 20%;

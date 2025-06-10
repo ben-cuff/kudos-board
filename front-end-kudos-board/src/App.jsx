@@ -11,10 +11,21 @@ function App() {
 		<div className="container">
 			<header className="header-container">
 				<h1 style={{ color: colors.primary }}>👏Kudos Board👏</h1>
-				<ChangeTheme />
 			</header>
 			<SearchBar />
 			<SortButtons />
+			<div className="create-theme-container">
+				<button
+					className="create-btn"
+					style={{
+						background: colors.button,
+						color: colors.background,
+					}}
+				>
+					Create a New Board
+				</button>
+				<ChangeTheme />
+			</div>
 		</div>
 	);
 }
