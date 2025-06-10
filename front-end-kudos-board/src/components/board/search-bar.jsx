@@ -1,4 +1,4 @@
-import useTheme from "../../hooks/useTheme";
+import { useTheme } from "../../hooks/use-theme";
 import "./search-bar.css";
 
 export default function SearchBar() {

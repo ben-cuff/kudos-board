@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useTheme from "../../hooks/useTheme";
+import { useTheme } from "../../hooks/use-theme";
 import "./sort-buttons.css";
 
 export default function SortButtons() {

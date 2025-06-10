@@ -1,6 +1,4 @@
-// from https://dev.to/rushi-patel/usetheme-custom-hook-maintain-standard-theme-throughout-the-app-df
-
-import { useState } from "react";
+import { createContext, useState } from "react";
 
 const colorThemes = {
 	light: {
@@ -21,7 +19,9 @@ const colorThemes = {
 	},
 };
 
-export default function useTheme() {
+const ThemeContext = createContext();
+
+export const ThemeProvider = ({ children }) => {
 	const [theme, setTheme] = useState("light");
 
 	const toggleTheme = () => {
@@ -31,5 +31,15 @@ export default function useTheme() {
 
 	const colors = theme === "dark" ? colorThemes.dark : colorThemes.light;
 
-	return { colors, currentTheme: theme, toggleTheme };
-}
+	const value = {
+		colors,
+		currentTheme: theme,
+		toggleTheme,
+	};
+
+	return (
+		<ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+	);
+};
+
+export { ThemeContext };
