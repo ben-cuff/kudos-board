@@ -29,12 +29,22 @@ enum Category {
 }
 
 model Card {
-  id       Int      @id @default(autoincrement())
+  id       Int       @id @default(autoincrement())
   message  String
   gif      String
-  upvotes  Int      @default(0)
+  upvotes  Int       @default(0)
   boardId  Int
   pinned   Boolean   @default(false)
   pinnedAt DateTime?
-  board    Board    @relation(fields: [boardId], references: [id])
+  board    Board     @relation(fields: [boardId], references: [id])
+  Comment  Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  message   String
+  author    String?
+  cardId    Int
+  card      Card     @relation(fields: [cardId], references: [id])
+  createdAt DateTime @default(now())
 }
