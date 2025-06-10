@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import BoardList from "./components/board/board-list";
 import CreateModal from "./components/board/create-modal";
 import SearchBar from "./components/board/search-bar";
 import SortButtons from "./components/board/sort-buttons";
@@ -18,8 +19,6 @@ function App() {
 			const baseUrl = import.meta.env.VITE_BASE_URL;
 			const response = await fetch(`${baseUrl}/board`);
 			const data = await response.json();
-
-			console.log(data);
 
 			setBoardData(data);
 		})();
@@ -47,7 +46,11 @@ function App() {
 				</button>
 				<ChangeTheme />
 			</div>
-			{toggleCreateModal && <CreateModal setToggleCreateModal />}
+
+			<main>{boardData && <BoardList boardData={boardData} />}</main>
+			{toggleCreateModal && (
+				<CreateModal setToggleCreateModal={setToggleCreateModal} />
+			)}
 		</div>
 	);
 }
