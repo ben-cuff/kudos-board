@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import "./card-page.css";
 import CardList from "./components/card/card-list";
+import CreateCardModal from "./components/card/create-card-modal";
 import ChangeTheme from "./components/change-theme";
 import { useTheme } from "./hooks/use-theme";
 
 export default function CardPage() {
 	const [boardData, setBoardData] = useState({});
 	const [cardData, setCardData] = useState([]);
+	const [toggleCreateModal, setToggleCreateModal] = useState(false);
 	const { boardId } = useParams();
 	const { colors } = useTheme();
 
 	document.body.style.backgroundColor = colors.background;
 
-	useEffect(() => {
-		(async () => {
+	const fetchBoardData = useCallback(async () => {
+		try {
 			const [responseBoard, responseCard] = await Promise.all([
 				fetch(`${import.meta.env.VITE_BASE_URL}/board/${boardId}`),
 				fetch(`${import.meta.env.VITE_BASE_URL}/board/${boardId}/card`),
@@ -27,8 +29,14 @@ export default function CardPage() {
 
 			setBoardData(dataBoard);
 			setCardData(dataCard);
-		})();
+		} catch (error) {
+			console.error("Error fetching board data:", error);
+		}
 	}, [boardId]);
+
+	useEffect(() => {
+		fetchBoardData();
+	}, [fetchBoardData]);
 
 	const handleDeleteCard = async (cardId) => {
 		await fetch(
@@ -45,24 +53,43 @@ export default function CardPage() {
 		);
 	};
 
+	const handleSubmitCreateModal = async (e) => {
+		e.preventDefault();
+		const message = e.target.message.value;
+		const author = e.target.author.value || "";
+		const gif = e.target.gif.value || "";
+
+		await fetch(`${import.meta.env.VITE_BASE_URL}/board/${boardId}/card`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ message, gif, author }),
+		});
+
+		e.target.reset();
+		await fetchBoardData();
+		setToggleCreateModal(false);
+	};
+
 	return (
 		<div className="container">
 			<header className="header-container">
 				<h1 style={{ color: colors.primary }}>👏Kudos Board👏</h1>
 			</header>
 			<div className="create-theme-container">
-				{/* <button
-                    className="create-btn"
-                    style={{
-                        background: colors.button,
-                        color: colors.background,
-                    }}
-                    onClick={() => {
-                        setToggleCreateModal(!toggleCreateModal);
-                    }}
-                >
-                    Create a New Board
-                </button> */}
+				<button
+					className="create-btn"
+					style={{
+						background: colors.button,
+						color: colors.background,
+					}}
+					onClick={() => {
+						setToggleCreateModal(!toggleCreateModal);
+					}}
+				>
+					Create a New Card
+				</button>
 				<ChangeTheme />
 			</div>
 			<h3>{boardData.title}</h3>
@@ -72,6 +99,12 @@ export default function CardPage() {
 					handleDeleteCard={handleDeleteCard}
 				/>
 			</main>
+			{toggleCreateModal && (
+				<CreateCardModal
+					setToggleCreateModal={setToggleCreateModal}
+					handleSubmitCreateModal={handleSubmitCreateModal}
+				/>
+			)}
 		</div>
 	);
 }

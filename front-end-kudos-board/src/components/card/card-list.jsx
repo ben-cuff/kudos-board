@@ -12,8 +12,7 @@ export default function CardList({ cardData, handleDeleteCard }) {
 				<Card
 					key={index}
 					card={card}
-					board={boardData}
-					handleDeleteBoard={handleDeleteCard}
+					handleDeleteCard={handleDeleteCard}
 				/>
 			))}
 		</div>
