@@ -2,6 +2,7 @@ import { GiphyFetch } from "@giphy/js-fetch-api";
 import { Gif } from "@giphy/react-components";
 import propTypes from "prop-types";
 import { useEffect, useState } from "react";
+import CommentsModal from "./comments-modal";
 
 export default function Card({
 	card,
@@ -10,6 +11,7 @@ export default function Card({
 	handlePinCard,
 }) {
 	const [gifData, setGifData] = useState(null);
+    const [toggleCommentsModal, setToggleCommentsModal] = useState(false);
 
 	useEffect(() => {
 		const gf = new GiphyFetch(import.meta.env.VITE_GIPHY_API_KEY);
@@ -28,26 +30,41 @@ export default function Card({
 	}, [card.gif]);
 
 	return (
-		<div className="card">
-			{gifData ? (
-				<Gif gif={gifData} width={200} noLink={true} />
-			) : (
-				<img src="https://picsum.photos/200" />
+		<>
+			{toggleCommentsModal && (
+				<CommentsModal
+					gifData={gifData}
+					setToggleCommentsModal={setToggleCommentsModal}
+					card={card}
+				/>
 			)}
-			<h2 className="card-title">{card.message}</h2>
-			<div className="btns-container">
-				<button onClick={() => handleUpvoteCard(card.id)}>
-					Upvotes: {card.upvotes}
-				</button>
-				<button>View Comments</button>
-				<button onClick={() => handleDeleteCard(card.id)}>
-					Delete
-				</button>
-				<button onClick={() => handlePinCard(card.id)}>
-					{card.pinned ? "Pinned" : "Press here to pin"}
-				</button>
+			<div className="card">
+				{gifData ? (
+					<Gif gif={gifData} width={200} noLink={true} />
+				) : (
+					<img src="https://picsum.photos/200" />
+				)}
+				<h2 className="card-title">{card.message}</h2>
+				<div className="btns-container">
+					<button onClick={() => handleUpvoteCard(card.id)}>
+						Upvotes: {card.upvotes}
+					</button>
+					<button
+						onClick={() => {
+							setToggleCommentsModal(!toggleCommentsModal);
+						}}
+					>
+						View Comments
+					</button>
+					<button onClick={() => handleDeleteCard(card.id)}>
+						Delete
+					</button>
+					<button onClick={() => handlePinCard(card.id)}>
+						{card.pinned ? "Pinned" : "Press here to pin"}
+					</button>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

@@ -1,5 +1,4 @@
 import propTypes from "prop-types";
-import { useEffect } from "react";
 import Card from "./card";
 
 export default function CardList({
@@ -14,23 +13,25 @@ export default function CardList({
 
 	return (
 		<div className="cards-container">
-			{cardData.sort((a, b) => {
-				if (a.pinned === b.pinned) {
-					if (a.pinned && a.pinnedAt && b.pinnedAt) {
-						return b.pinnedAt - a.pinnedAt;
+			{cardData
+				.sort((a, b) => {
+					if (a.pinned === b.pinned) {
+						if (a.pinned && a.pinnedAt && b.pinnedAt) {
+							return b.pinnedAt - a.pinnedAt;
+						}
+						return 0;
 					}
-					return 0;
-				}
-				return a.pinned ? -1 : 1;
-			}).map((card) => (
-				<Card
-					key={card.id}
-					card={card}
-					handleDeleteCard={handleDeleteCard}
-					handleUpvoteCard={handleUpvoteCard}
-					handlePinCard={handlePinCard}
-				/>
-			))}
+					return a.pinned ? -1 : 1;
+				})
+				.map((card) => (
+					<Card
+						key={card.id}
+						card={card}
+						handleDeleteCard={handleDeleteCard}
+						handleUpvoteCard={handleUpvoteCard}
+						handlePinCard={handlePinCard}
+					/>
+				))}
 		</div>
 	);
 }
