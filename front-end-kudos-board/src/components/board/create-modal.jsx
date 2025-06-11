@@ -4,16 +4,13 @@ import "./create-modal.css";
 
 export default function CreateModal({
 	setToggleCreateModal,
-	handleSubmitCreateModal
+	handleSubmitCreateModal,
 }) {
 	const { colors } = useTheme();
 
 	return (
 		<div className="overlay-style">
-			<div
-				className="modal-style"
-				style={{ background: colors.background }}
-			>
+			<div className="modal-style" style={{ background: colors.card }}>
 				<h2>Create New Board</h2>
 				<form onSubmit={handleSubmitCreateModal}>
 					<input
@@ -58,5 +55,5 @@ export default function CreateModal({
 
 CreateModal.propTypes = {
 	setToggleCreateModal: propTypes.func.isRequired,
-	handleSubmitCreateModal: propTypes.func.isRequired
+	handleSubmitCreateModal: propTypes.func.isRequired,
 };
