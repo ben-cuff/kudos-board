@@ -71,22 +71,25 @@ export default function CommentsModal({
 							×
 						</button>
 					</div>
-					<div>
+					<div className="gif-container">
 						{gifData ? (
-							<Gif gif={gifData} width={200} noLink={true} />
+							<Gif
+								gif={gifData}
+								percentWidth="60%"
+								height="auto"
+								noLink={true}
+							/>
 						) : (
 							<img src="https://picsum.photos/200" />
 						)}
-						{card.author ? (
-							<p style={{ color: colors.primary }}>
-								From: {card.author}
-							</p>
-						) : (
-							<p style={{ color: colors.primary }}>
-								From: anonymous
-							</p>
-						)}
 					</div>
+					{card.author ? (
+						<p style={{ color: colors.primary }}>
+							From: {card.author}
+						</p>
+					) : (
+						<p style={{ color: colors.primary }}>From: anonymous</p>
+					)}
 				</div>
 				<div>
 					<h3 style={{ color: colors.primary, textAlign: "center" }}>
@@ -114,21 +117,19 @@ export default function CommentsModal({
 						)}
 					</div>
 					<form onSubmit={handleSubmitComment}>
-						<div>
-							<textarea
-								value={newComment}
-								onChange={(e) => setNewComment(e.target.value)}
-								placeholder="Add a comment..."
-								rows={3}
-								required
-							/>
-							<input
-								name="author"
-								placeholder="author (optional)"
-								id="author"
-							/>
-							<button type="submit">Add Comment</button>
-						</div>
+						<textarea
+							value={newComment}
+							onChange={(e) => setNewComment(e.target.value)}
+							placeholder="Add a comment..."
+							rows={3}
+							required
+						/>
+						<input
+							name="author"
+							placeholder="author (optional)"
+							id="author"
+						/>
+						<button type="submit">Add Comment</button>
 					</form>
 				</div>
 			</div>

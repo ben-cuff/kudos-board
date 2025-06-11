@@ -20,6 +20,10 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	width: 30%;
+	min-height: 250px;
+	max-height: 90vh;
+	overflow-y: auto;
 }
 
 .comments-container {
@@ -50,4 +54,33 @@
 .header-from-gif {
 	display: flex;
 	flex-direction: column;
+}
+
+.modal-style form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 10px;
+}
+
+.modal-style textarea {
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	resize: vertical;
+	font-family: inherit;
+	width: 100%;
+}
+
+.modal-style input {
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-family: inherit;
+	width: 100%;
+}
+
+.gif-container {
+	display: flex;
+	justify-content: center;
 }
