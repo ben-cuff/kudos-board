@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import "./card-page.css";
 import CardList from "./components/card/card-list";
 import CreateCardModal from "./components/card/create-card-modal";
@@ -10,6 +10,7 @@ export default function CardPage() {
 	const [boardData, setBoardData] = useState({});
 	const [cardData, setCardData] = useState([]);
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
+	const navigate = useNavigate();
 	const { boardId } = useParams();
 	const { colors } = useTheme();
 
@@ -53,6 +54,27 @@ export default function CardPage() {
 		);
 	};
 
+	const handleUpvoteCard = async (cardId) => {
+		// this is the intended implementation where you can upvote multiple times
+		await fetch(
+			`${import.meta.env.VITE_BASE_URL}/board/${boardId}/card/${cardId}`,
+			{
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					operation: "upvote",
+				}),
+			}
+		);
+		setCardData((prevData) =>
+			prevData.map((card) =>
+				card.id === cardId ? { ...card, upvotes: card.upvotes + 1 } : card
+			)
+		);
+	};
+
 	const handleSubmitCreateModal = async (e) => {
 		e.preventDefault();
 		const message = e.target.message.value;
@@ -75,6 +97,15 @@ export default function CardPage() {
 	return (
 		<div className="container">
 			<header className="header-container">
+				<button
+					className="back-button"
+					style={{
+						color: colors.primary,
+					}}
+					onClick={() => navigate(-1)}
+				>
+					←
+				</button>
 				<h1 style={{ color: colors.primary }}>👏Kudos Board👏</h1>
 			</header>
 			<div className="create-theme-container">
@@ -97,6 +128,7 @@ export default function CardPage() {
 				<CardList
 					cardData={cardData}
 					handleDeleteCard={handleDeleteCard}
+					handleUpvoteCard={handleUpvoteCard}
 				/>
 			</main>
 			{toggleCreateModal && (
