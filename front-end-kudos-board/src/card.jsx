@@ -14,16 +14,14 @@ export default function Card() {
 
 	useEffect(() => {
 		(async () => {
-			const responseBoard = await fetch(
-				`${import.meta.env.VITE_BASE_URL}/board/${boardId}`
-			);
+			const [responseBoard, responseCard] = await Promise.all([
+				fetch(`${import.meta.env.VITE_BASE_URL}/board/${boardId}`),
+				fetch(`${import.meta.env.VITE_BASE_URL}/board/${boardId}/card`),
+			]);
+
 			const dataBoard = await responseBoard.json();
 
 			setBoardData(dataBoard);
-
-			const responseCard = await fetch(
-				`${import.meta.env.VITE_BASE_URL}/board/${boardId}/card`
-			);
 
 			const dataCard = await responseCard.json();
 
