@@ -8,7 +8,6 @@ import "./create-card-modal.css";
 export default function CreateCardModal({
 	setToggleCreateModal,
 	handleSubmitCreateModal,
-	selectedGif,
 	setSelectedGif,
 }) {
 	const { colors } = useTheme();

@@ -139,7 +139,6 @@ export default function CardPage() {
 				<CreateCardModal
 					setToggleCreateModal={setToggleCreateModal}
 					handleSubmitCreateModal={handleSubmitCreateModal}
-					selectedGif={selectedGif}
 					setSelectedGif={setSelectedGif}
 				/>
 			)}
