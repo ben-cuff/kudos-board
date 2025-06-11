@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 
 app.get("/board", async (req, res) => {
 	try {
-		const { category } = req.query;
+		const { category, search } = req.query;
 		const where = {};
 
 		if (category) {
@@ -27,6 +27,10 @@ app.get("/board", async (req, res) => {
 					.json({ error: "Invalid category provided" });
 			}
 			where.category = category;
+		}
+
+		if (search) {
+			where.title = { contains: search, mode: 'insensitive' };
 		}
 
 		const boards = await prisma.board.findMany({ where });
