@@ -58,6 +58,5 @@ export default function CreateModal({
 
 CreateModal.propTypes = {
 	setToggleCreateModal: propTypes.func.isRequired,
-	handleSubmitCreateModal: propTypes.func.isRequired,
-	handleDeleteBoard: propTypes.func.isRequired,
+	handleSubmitCreateModal: propTypes.func.isRequired
 };
