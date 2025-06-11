@@ -30,7 +30,7 @@ app.get("/board", async (req, res) => {
 		}
 
 		if (search) {
-			where.title = { contains: search, mode: 'insensitive' };
+			where.title = { contains: search, mode: "insensitive" };
 		}
 
 		const boards = await prisma.board.findMany({ where });

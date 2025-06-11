@@ -18,7 +18,7 @@ export default function CardList({
 				.sort((a, b) => {
 					if (a.pinned === b.pinned) {
 						if (a.pinned && a.pinnedAt && b.pinnedAt) {
-							return b.pinnedAt - a.pinnedAt;
+							return new Date(b.pinnedAt) - new Date(a.pinnedAt);
 						}
 						return 0;
 					}
