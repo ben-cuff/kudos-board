@@ -2,6 +2,7 @@ import { Gif } from "@giphy/react-components";
 import propTypes from "prop-types";
 import { useCallback, useEffect, useState } from "react";
 import { useTheme } from "../../hooks/use-theme";
+import "./comments-modal.css";
 
 export default function CommentsModal({
 	gifData,
@@ -19,7 +20,6 @@ export default function CommentsModal({
 			}/comment`
 		);
 		const data = await response.json();
-		console.log(data);
 		setComments(data);
 	}, [card]);
 
@@ -55,40 +55,64 @@ export default function CommentsModal({
 				className="modal-style"
 				style={{ background: colors.background }}
 			>
-				<div>
-					<h2>Comments</h2>
-					<button onClick={() => setToggleCommentsModal(false)}>
-						×
-					</button>
-				</div>
-
-				<div>
-					<p>{card.message}</p>
-					{gifData ? (
-						<Gif gif={gifData} width={200} noLink={true} />
-					) : (
-						<img src="https://picsum.photos/200" />
-					)}
-					{card.author && <p>From: {card.author}</p>}
-				</div>
-
-				<div>
-					<h3>Comments</h3>
+				<div className="header-from-gif">
+					<div className="modal-header">
+						<h3
+							style={{
+								color: colors.primary,
+							}}
+						>
+							{card.message}
+						</h3>
+						<button
+							className="close-btn"
+							onClick={() => setToggleCommentsModal(false)}
+						>
+							×
+						</button>
+					</div>
 					<div>
+						{gifData ? (
+							<Gif gif={gifData} width={200} noLink={true} />
+						) : (
+							<img src="https://picsum.photos/200" />
+						)}
+						{card.author ? (
+							<p style={{ color: colors.primary }}>
+								From: {card.author}
+							</p>
+						) : (
+							<p style={{ color: colors.primary }}>
+								From: anonymous
+							</p>
+						)}
+					</div>
+				</div>
+				<div>
+					<h3 style={{ color: colors.primary, textAlign: "center" }}>
+						Comments
+					</h3>
+					<div className="comments-container">
 						{comments.length > 0 ? (
 							comments.map((comment) => (
-								<div key={comment.id}>
-									<p>{comment.message}</p>
-									{comment.author && (
-										<p>- {comment.author}</p>
-									)}
+								<div
+									key={comment.id}
+									style={{ color: colors.primary }}
+								>
+									<p style={{ color: colors.primary }}>
+										{comment.message}
+									</p>
+									<p style={{ color: colors.primary }}>
+										- {comment.author || "anonymous"}
+									</p>
 								</div>
 							))
 						) : (
-							<p>No comments yet.</p>
+							<p style={{ color: colors.primary }}>
+								No comments yet.
+							</p>
 						)}
 					</div>
-
 					<form onSubmit={handleSubmitComment}>
 						<div>
 							<textarea
