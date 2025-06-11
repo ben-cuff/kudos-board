@@ -79,6 +79,21 @@ export default function CardPage() {
 		);
 	};
 
+	const handlePinCard = async (cardId) => {
+		await fetch(
+			`${
+				import.meta.env.VITE_BASE_URL
+			}/board/${boardId}/card/${cardId}/pin`,
+			{
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
+		fetchBoardData();
+	};
+
 	const handleSubmitCreateModal = async (e) => {
 		e.preventDefault();
 		const message = e.target.message.value;
@@ -133,6 +148,7 @@ export default function CardPage() {
 					cardData={cardData}
 					handleDeleteCard={handleDeleteCard}
 					handleUpvoteCard={handleUpvoteCard}
+					handlePinCard={handlePinCard}
 				/>
 			</main>
 			{toggleCreateModal && (

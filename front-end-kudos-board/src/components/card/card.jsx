@@ -3,7 +3,12 @@ import { Gif } from "@giphy/react-components";
 import propTypes from "prop-types";
 import { useEffect, useState } from "react";
 
-export default function Card({ card, handleDeleteCard, handleUpvoteCard }) {
+export default function Card({
+	card,
+	handleDeleteCard,
+	handleUpvoteCard,
+	handlePinCard,
+}) {
 	const [gifData, setGifData] = useState(null);
 
 	useEffect(() => {
@@ -36,7 +41,10 @@ export default function Card({ card, handleDeleteCard, handleUpvoteCard }) {
 				</button>
 				<button>View Comments</button>
 				<button onClick={() => handleDeleteCard(card.id)}>
-					Delete Card
+					Delete
+				</button>
+				<button onClick={() => handlePinCard(card.id)}>
+					{card.pinned ? "Pinned" : "Press here to pin"}
 				</button>
 			</div>
 		</div>
@@ -47,4 +55,5 @@ Card.propTypes = {
 	card: propTypes.object.isRequired,
 	handleDeleteCard: propTypes.func.isRequired,
 	handleUpvoteCard: propTypes.func.isRequired,
+	handlePinCard: propTypes.func.isRequired,
 };
