@@ -2,20 +2,20 @@ import { createContext, useState } from "react";
 
 const colorThemes = {
 	light: {
-		primary: "#101010",
-		secondary: "#7f7f7f",
-		background: "#efefef",
-		card: "lightgray",
-		border: "#303030",
-		button: "#0D98BA",
+		primary: "#202020",
+		secondary: "#8f8f8f",
+		background: "#f5f5f5",
+		card: "#e0e0e0",
+		border: "#404040",
+		button: "#25a5c4",
 	},
 	dark: {
-		primary: "#efefef",
-		secondary: "#7f7f7f",
-		background: "#101010",
-		card: "darkgray",
-		border: "#b0b0b0",
-		button: "#0D98BA",
+		primary: "#f5f5f5",
+		secondary: "#8f8f8f",
+		background: "#202020",
+		card: "#909090",
+		border: "#c0c0c0",
+		button: "#25a5c4",
 	},
 };
 
