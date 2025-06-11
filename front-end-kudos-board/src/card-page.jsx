@@ -10,6 +10,8 @@ export default function CardPage() {
 	const [boardData, setBoardData] = useState({});
 	const [cardData, setCardData] = useState([]);
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
+	const [selectedGif, setSelectedGif] = useState("");
+
 	const navigate = useNavigate();
 	const { boardId } = useParams();
 	const { colors } = useTheme();
@@ -70,7 +72,9 @@ export default function CardPage() {
 		);
 		setCardData((prevData) =>
 			prevData.map((card) =>
-				card.id === cardId ? { ...card, upvotes: card.upvotes + 1 } : card
+				card.id === cardId
+					? { ...card, upvotes: card.upvotes + 1 }
+					: card
 			)
 		);
 	};
@@ -79,7 +83,7 @@ export default function CardPage() {
 		e.preventDefault();
 		const message = e.target.message.value;
 		const author = e.target.author.value || "";
-		const gif = e.target.gif.value || "";
+		const gif = selectedGif || "";
 
 		await fetch(`${import.meta.env.VITE_BASE_URL}/board/${boardId}/card`, {
 			method: "POST",
@@ -135,6 +139,8 @@ export default function CardPage() {
 				<CreateCardModal
 					setToggleCreateModal={setToggleCreateModal}
 					handleSubmitCreateModal={handleSubmitCreateModal}
+					selectedGif={selectedGif}
+					setSelectedGif={setSelectedGif}
 				/>
 			)}
 		</div>

@@ -1,12 +1,27 @@
+import { GiphyFetch } from "@giphy/js-fetch-api";
+import { Gif, Grid } from "@giphy/react-components";
 import propTypes from "prop-types";
+import { useState } from "react";
 import { useTheme } from "../../hooks/use-theme";
 import "./create-card-modal.css";
 
 export default function CreateCardModal({
 	setToggleCreateModal,
 	handleSubmitCreateModal,
+	selectedGif,
+	setSelectedGif,
 }) {
 	const { colors } = useTheme();
+	const gf = new GiphyFetch(import.meta.env.VITE_GIPHY_API_KEY);
+	const [searchTerm, setSearchTerm] = useState("");
+	const [gifData, setGifData] = useState(null);
+
+	const fetchGifs = (offset) => {
+		if (offset >= 6) return Promise.resolve({ data: [] });
+		const limit = Math.min(16, 16 - offset);
+		return gf.search(searchTerm, { offset, limit });
+    };
+    
 	return (
 		<div className="overlay-style">
 			<div
@@ -33,8 +48,37 @@ export default function CreateCardModal({
 						id="card-gif"
 						name="gif"
 						required
+						onChange={(e) => setSearchTerm(e.target.value)}
 						placeholder="gif from giphy"
 					/>
+					{searchTerm && !gifData && (
+						<Grid
+							width={300}
+							columns={4}
+							onGifClick={(gif) => {
+								setSelectedGif(gif.id);
+								setGifData(gif);
+							}}
+							fetchGifs={fetchGifs}
+							key={searchTerm}
+							noLink={true}
+						/>
+					)}
+					{gifData && (
+						<div className="selected-gif-container">
+							<Gif gif={gifData} width={200} noLink={true} />
+							<button
+								type="button"
+								className="reset-gif-btn"
+								onClick={() => {
+									setGifData(null);
+									setSelectedGif("");
+								}}
+							>
+								Reset GIF
+							</button>
+						</div>
+					)}
 					<button type="submit">Create Board</button>
 				</form>
 				<button
@@ -53,4 +97,6 @@ export default function CreateCardModal({
 CreateCardModal.propTypes = {
 	setToggleCreateModal: propTypes.func.isRequired,
 	handleSubmitCreateModal: propTypes.func.isRequired,
+	selectedGif: propTypes.string.isRequired,
+	setSelectedGif: propTypes.func.isRequired,
 };
