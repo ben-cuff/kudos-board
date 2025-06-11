@@ -7,7 +7,7 @@ export default function Card({ card, handleDeleteCard }) {
 			<h2 className="card-title">{card.title}</h2>
 			<h3 className="card-category">{card.category}</h3>
 			<div className="btns-container">
-                <button onClick={ }>
+                <button>
 					View Comments
 				</button>
 				<button onClick={() => handleDeleteCard(card.id)}>
