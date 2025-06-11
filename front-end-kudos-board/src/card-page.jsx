@@ -29,6 +29,22 @@ export default function CardPage() {
 			setCardData(dataCard);
 		})();
 	}, [boardId]);
+
+	const handleDeleteCard = async (cardId) => {
+		await fetch(
+			`${import.meta.env.VITE_BASE_URL}/board/${boardId}/card/${cardId}`,
+			{
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
+		setCardData((prevData) =>
+			prevData.filter((card) => card.id !== cardId)
+		);
+	};
+
 	return (
 		<div className="container">
 			<header className="header-container">
@@ -51,7 +67,10 @@ export default function CardPage() {
 			</div>
 			<h3>{boardData.title}</h3>
 			<main>
-				<CardList />
+				<CardList
+					cardData={cardData}
+					handleDeleteCard={handleDeleteCard}
+				/>
 			</main>
 		</div>
 	);

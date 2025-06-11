@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import Card from "./card";
 
-export default function CardList({ boardData, cardData, handleDeleteCard }) {
+export default function CardList({ cardData, handleDeleteCard }) {
 	if (!cardData || cardData.length === 0) {
 		return <h1>No cards Found</h1>;
 	}
@@ -21,7 +21,6 @@ export default function CardList({ boardData, cardData, handleDeleteCard }) {
 }
 
 CardList.propTypes = {
-	boardData: propTypes.array,
 	cardData: propTypes.arrayOf(propTypes.object).isRequired,
 	handleDeleteCard: propTypes.func.isRequired,
 };

@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 
-export default function Card({ board, card, handleDeleteCard }) {
+export default function Card({ card, handleDeleteCard }) {
 	return (
 		<div className="card">
 			<img src={card.image} alt={card.title} className="card-image" />
@@ -19,7 +19,6 @@ export default function Card({ board, card, handleDeleteCard }) {
 }
 
 Card.propTypes = {
-	board: propTypes.object.isRequired,
 	card: propTypes.object.isRequired,
 	handleDeleteCard: propTypes.func.isRequired,
 };
