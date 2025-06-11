@@ -19,12 +19,12 @@ export default function Card() {
 				fetch(`${import.meta.env.VITE_BASE_URL}/board/${boardId}/card`),
 			]);
 
-			const dataBoard = await responseBoard.json();
+			const [dataBoard, dataCard] = await Promise.all([
+				responseBoard.json(),
+				responseCard.json(),
+			]);
 
 			setBoardData(dataBoard);
-
-			const dataCard = await responseCard.json();
-
 			setCardData(dataCard);
 		})();
 	}, [boardId]);
