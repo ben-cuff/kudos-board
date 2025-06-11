@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import "./card.css";
+import "./card-page.css";
+import CardList from "./components/card/card-list";
 import ChangeTheme from "./components/change-theme";
 import { useTheme } from "./hooks/use-theme";
 
-export default function Card() {
+export default function CardPage() {
 	const [boardData, setBoardData] = useState({});
 	const [cardData, setCardData] = useState([]);
 	const { boardId } = useParams();
@@ -49,6 +50,9 @@ export default function Card() {
 				<ChangeTheme />
 			</div>
 			<h3>{boardData.title}</h3>
+			<main>
+				<CardList />
+			</main>
 		</div>
 	);
 }
