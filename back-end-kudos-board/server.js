@@ -215,6 +215,7 @@ app.post("/board/:boardId/card", async (req, res) => {
 			upvotes = 0,
 			pinned = false,
 			pinnedAt,
+			author
 		} = req.body;
 
 		if (!message || !gif) {
@@ -228,6 +229,7 @@ app.post("/board/:boardId/card", async (req, res) => {
 			message,
 			gif,
 			upvotes,
+			author,
 			boardId: Number(boardId),
 			pinned,
 		};
