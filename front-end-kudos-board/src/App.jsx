@@ -12,6 +12,7 @@ function App() {
 	const [boardData, setBoardData] = useState([]);
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
 	const [categoryInput, setCategoryInput] = useState("All");
+	const [searchInput, setSearchInput] = useState("");
 
 	document.body.style.backgroundColor = colors.background;
 
@@ -36,6 +37,10 @@ function App() {
 			})();
 		}
 	}, [categoryInput]);
+
+	useEffect(() => {
+		if (searchInput == "") fetchBoardData();
+	}, [searchInput]);
 
 	async function fetchBoardsByCategory(category) {
 		try {
@@ -90,12 +95,32 @@ function App() {
 		setToggleCreateModal(false);
 	};
 
+	const handleSearchSubmit = async () => {
+		setCategoryInput("All");
+
+		try {
+			console.log(
+				`${import.meta.env.VITE_BASE_URL}/board?search=${searchInput}`
+			);
+			const response = await fetch(
+				`${import.meta.env.VITE_BASE_URL}/board?search=${searchInput}`
+			);
+			const data = await response.json();
+			setBoardData(data);
+		} catch (error) {
+			console.error("Failed to fetch boards by category:", error);
+		}
+	};
+
 	return (
 		<div className="container">
 			<header className="header-container">
 				<h1 style={{ color: colors.primary }}>👏Kudos Board👏</h1>
 			</header>
-			<SearchBar />
+			<SearchBar
+				setSearchInput={setSearchInput}
+				handleSearchSubmit={handleSearchSubmit}
+			/>
 			<SortButtons
 				categoryInput={categoryInput}
 				setCategoryInput={setCategoryInput}
