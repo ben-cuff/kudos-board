@@ -142,7 +142,7 @@ export default function CardPage() {
 				</button>
 				<ChangeTheme />
 			</div>
-			<h3>{boardData.title}</h3>
+			<h3 style={{ color: colors.primary }}>{boardData.title}</h3>
 			<main>
 				<CardList
 					cardData={cardData}

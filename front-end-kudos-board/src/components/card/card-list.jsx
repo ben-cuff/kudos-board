@@ -1,5 +1,6 @@
 import propTypes from "prop-types";
 import Card from "./card";
+import "./card-list.css";
 
 export default function CardList({
 	cardData,

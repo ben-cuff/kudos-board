@@ -2,6 +2,8 @@ import { GiphyFetch } from "@giphy/js-fetch-api";
 import { Gif } from "@giphy/react-components";
 import propTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useTheme } from "../../hooks/use-theme";
+import "./card.css";
 import CommentsModal from "./comments-modal";
 
 export default function Card({
@@ -11,7 +13,8 @@ export default function Card({
 	handlePinCard,
 }) {
 	const [gifData, setGifData] = useState(null);
-    const [toggleCommentsModal, setToggleCommentsModal] = useState(false);
+	const [toggleCommentsModal, setToggleCommentsModal] = useState(false);
+	const { colors } = useTheme();
 
 	useEffect(() => {
 		const gf = new GiphyFetch(import.meta.env.VITE_GIPHY_API_KEY);
@@ -38,11 +41,11 @@ export default function Card({
 					card={card}
 				/>
 			)}
-			<div className="card">
+			<div className="card" style={{ background: colors.card }}>
 				{gifData ? (
-					<Gif gif={gifData} width={200} noLink={true} />
+					<Gif gif={gifData} width={180} noLink={true} />
 				) : (
-					<img src="https://picsum.photos/200" />
+					<img src="https://picsum.photos/180" />
 				)}
 				<h2 className="card-title">{card.message}</h2>
 				<div className="btns-container">
@@ -56,6 +59,8 @@ export default function Card({
 					>
 						View Comments
 					</button>
+				</div>
+				<div className="btns-container">
 					<button onClick={() => handleDeleteCard(card.id)}>
 						Delete
 					</button>
