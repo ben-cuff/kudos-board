@@ -1,6 +1,7 @@
 .container {
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 30px;
 }
 
 .header-container {
@@ -27,4 +28,13 @@
 	display: flex;
 	justify-content: space-around;
 	align-content: center;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	left: 0;
+	padding: 10px;
+	font-size: 12px;
 }

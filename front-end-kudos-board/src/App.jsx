@@ -149,6 +149,16 @@ function App() {
 					/>
 				)}
 			</main>
+			<footer
+				className="footer"
+				style={{
+					background: colors.background,
+					color: colors.primary,
+					borderTop: `1px solid ${colors.primary}`,
+				}}
+			>
+				© 2025 Kudos
+			</footer>
 			{toggleCreateModal && (
 				<CreateModal
 					setToggleCreateModal={setToggleCreateModal}

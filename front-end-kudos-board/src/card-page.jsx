@@ -158,6 +158,16 @@ export default function CardPage() {
 					setSelectedGif={setSelectedGif}
 				/>
 			)}
+			<footer
+				className="footer"
+				style={{
+					background: colors.background,
+					color: colors.primary,
+					borderTop: `1px solid ${colors.primary}`,
+				}}
+			>
+				© 2025 Kudos
+			</footer>
 		</div>
 	);
 }
