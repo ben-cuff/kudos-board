@@ -33,6 +33,7 @@ model Card {
   id       Int       @id @default(autoincrement())
   message  String
   gif      String
+  author String?
   upvotes  Int       @default(0)
   boardId  Int
   pinned   Boolean   @default(false)
