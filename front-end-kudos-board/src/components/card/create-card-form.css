@@ -34,4 +34,6 @@ form button {
 .grid-container {
 	max-height: 300px;
 	overflow-y: scroll;
+	display: flex;
+	justify-content: center;
 }
