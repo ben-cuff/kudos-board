@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { apiCard } from "./api/apiCard";
 import "./card-page.css";
@@ -26,7 +26,9 @@ export default function CardPage() {
 
 	const { colors } = useTheme();
 
-	document.body.style.backgroundColor = colors.background;
+	useEffect(() => {
+		document.body.style.backgroundColor = colors.background;
+	}, [colors]);
 
 	const handleSubmitCreateModal = useCallback(
 		async (e) => {

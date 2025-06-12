@@ -28,7 +28,9 @@ function App() {
 
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
 
-	document.body.style.backgroundColor = colors.background;
+	useEffect(() => {
+		document.body.style.backgroundColor = colors.background;
+	}, [colors]);
 
 	useEffect(() => {
 		fetchBoardData();
