@@ -12,7 +12,13 @@ export default function CreateModal({
 		<div className="overlay-style">
 			<div className="modal-style" style={{ background: colors.card }}>
 				<h2>Create New Board</h2>
-				<form onSubmit={handleSubmitCreateModal}>
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						handleSubmitCreateModal(e);
+						setToggleCreateModal(false);
+					}}
+				>
 					<input
 						type="text"
 						id="board-title"

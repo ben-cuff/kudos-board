@@ -11,7 +11,6 @@ export function useBoardData() {
 
 	const handleSubmitCreateModal = useCallback(
 		async (e) => {
-			e.preventDefault();
 			const title = e.target.title.value;
 			const category = e.target.category.value;
 			const author = e.target.author.value || "";
