@@ -4,7 +4,7 @@ import propTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useTheme } from "../../hooks/use-theme";
 import "./card.css";
-import CommentsModal from "./comments-modal";
+import CommentsModal from "./comments/comments-modal";
 
 export default function Card({
 	card,
