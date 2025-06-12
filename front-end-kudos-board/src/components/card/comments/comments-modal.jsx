@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import useComments from "../../../hooks/use-comments";
 import { useTheme } from "../../../hooks/use-theme";
-import ModalHeader from "../modal-header";
+import ModalHeader from "./modal-header";
 import CommentsForm from "./comments-form";
 import CommentsList from "./comments-list";
 import "./comments-modal.css";

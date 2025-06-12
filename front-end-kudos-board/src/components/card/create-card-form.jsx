@@ -1,5 +1,5 @@
 import { Gif, Grid } from "@giphy/react-components";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 import useCreateCard from "../../hooks/use-create-card";
 import "./create-card-form.css";
 
@@ -7,8 +7,13 @@ export default function CreateCardForm({
 	handleSubmitCreateModal,
 	setSelectedGif,
 }) {
-	const { searchTerm, setSearchTerm, gifData, setGifData, fetchGifs } =
-		useCreateCard();
+	const {
+		searchTerm,
+		setSearchTerm,
+		selectedGifData,
+		setSelectedGifData,
+		fetchGifs,
+	} = useCreateCard();
 	return (
 		<form onSubmit={handleSubmitCreateModal}>
 			<input
@@ -32,14 +37,14 @@ export default function CreateCardForm({
 				onChange={(e) => setSearchTerm(e.target.value)}
 				placeholder="gif from giphy"
 			/>
-			{searchTerm && !gifData && (
+			{searchTerm && !selectedGifData && (
 				<div className="grid-container">
 					<Grid
 						width={200}
 						columns={3}
 						onGifClick={(gif) => {
 							setSelectedGif(gif.id);
-							setGifData(gif);
+							setSelectedGifData(gif);
 						}}
 						fetchGifs={fetchGifs}
 						key={searchTerm}
@@ -47,14 +52,14 @@ export default function CreateCardForm({
 					/>
 				</div>
 			)}
-			{gifData && (
+			{selectedGifData && (
 				<div className="selected-gif-container">
-					<Gif gif={gifData} width={200} noLink={true} />
+					<Gif gif={selectedGifData} width={200} noLink={true} />
 					<button
 						type="button"
 						className="reset-gif-btn"
 						onClick={() => {
-							setGifData(null);
+							setSelectedGifData(null);
 							setSelectedGif("");
 						}}
 					>
@@ -68,11 +73,6 @@ export default function CreateCardForm({
 }
 
 CreateCardForm.propTypes = {
-	handleSubmitCreateModal: PropTypes.func.isRequired,
-	setSearchTerm: PropTypes.func.isRequired,
-	searchTerm: PropTypes.string,
-	gifData: PropTypes.object,
-	setSelectedGif: PropTypes.func.isRequired,
-	setGifData: PropTypes.func.isRequired,
-	fetchGifs: PropTypes.func.isRequired,
+	handleSubmitCreateModal: propTypes.func.isRequired,
+	setSelectedGif: propTypes.func.isRequired,
 };
