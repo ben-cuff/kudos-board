@@ -1,0 +1,23 @@
+form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 10px;
+}
+
+textarea {
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	resize: vertical;
+	font-family: inherit;
+	width: 100%;
+}
+
+.input {
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-family: inherit;
+	width: 100%;
+}

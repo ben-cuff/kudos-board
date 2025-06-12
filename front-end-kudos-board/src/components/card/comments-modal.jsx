@@ -1,8 +1,10 @@
-import { Gif } from "@giphy/react-components";
 import propTypes from "prop-types";
-import { useCallback, useEffect, useState } from "react";
+import useComments from "../../hooks/use-comments";
 import { useTheme } from "../../hooks/use-theme";
+import CommentsForm from "./comments-form";
+import CommentsList from "./comments-list";
 import "./comments-modal.css";
+import ModalHeader from "./modal-header";
 
 export default function CommentsModal({
 	gifData,
@@ -10,44 +12,8 @@ export default function CommentsModal({
 	card,
 }) {
 	const { colors } = useTheme();
-	const [newComment, setNewComment] = useState("");
-	const [comments, setComments] = useState([]);
-
-	const fetchComments = useCallback(async () => {
-		const response = await fetch(
-			`${import.meta.env.VITE_BASE_URL}/board/${card.boardId}/card/${
-				card.id
-			}/comment`
-		);
-		const data = await response.json();
-		setComments(data);
-	}, [card]);
-
-	useEffect(() => {
-		fetchComments();
-	}, [fetchComments]);
-
-	const handleSubmitComment = async (e) => {
-		e.preventDefault();
-
-		await fetch(
-			`${import.meta.env.VITE_BASE_URL}/board/${card.boardId}/card/${
-				card.id
-			}/comment`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					message: newComment,
-					author: e.target.author.value,
-				}),
-			}
-		);
-		fetchComments();
-		setNewComment("");
-	};
+	const { newComment, setNewComment, comments, handleSubmitComment } =
+		useComments(card);
 
 	return (
 		<div className="overlay-style">
@@ -55,82 +21,22 @@ export default function CommentsModal({
 				className="modal-style"
 				style={{ background: colors.background }}
 			>
-				<div className="header-from-gif">
-					<div className="modal-header">
-						<h3
-							style={{
-								color: colors.primary,
-							}}
-						>
-							{card.message}
-						</h3>
-						<button
-							className="close-btn"
-							onClick={() => setToggleCommentsModal(false)}
-						>
-							×
-						</button>
-					</div>
-					<div className="gif-container">
-						{gifData ? (
-							<Gif
-								gif={gifData}
-								percentWidth="60%"
-								height="auto"
-								noLink={true}
-							/>
-						) : (
-							<img src="https://picsum.photos/200" />
-						)}
-					</div>
-					{card.author ? (
-						<p style={{ color: colors.primary }}>
-							From: {card.author}
-						</p>
-					) : (
-						<p style={{ color: colors.primary }}>From: anonymous</p>
-					)}
-				</div>
+				<ModalHeader
+					card={card}
+					gifData={gifData}
+					colors={colors}
+					setToggleCommentsModal={setToggleCommentsModal}
+				/>
 				<div>
 					<h3 style={{ color: colors.primary, textAlign: "center" }}>
 						Comments
 					</h3>
-					<div className="comments-container">
-						{comments.length > 0 ? (
-							comments.map((comment) => (
-								<div
-									key={comment.id}
-									style={{ color: colors.primary }}
-								>
-									<p style={{ color: colors.primary }}>
-										{comment.message}
-									</p>
-									<p style={{ color: colors.primary }}>
-										- {comment.author || "anonymous"}
-									</p>
-								</div>
-							))
-						) : (
-							<p style={{ color: colors.primary }}>
-								No comments yet.
-							</p>
-						)}
-					</div>
-					<form onSubmit={handleSubmitComment}>
-						<textarea
-							value={newComment}
-							onChange={(e) => setNewComment(e.target.value)}
-							placeholder="Add a comment..."
-							rows={3}
-							required
-						/>
-						<input
-							name="author"
-							placeholder="author (optional)"
-							id="author"
-						/>
-						<button type="submit">Add Comment</button>
-					</form>
+					<CommentsList comments={comments} colors={colors} />
+					<CommentsForm
+						newComment={newComment}
+						setNewComment={setNewComment}
+						handleSubmitComment={handleSubmitComment}
+					/>
 				</div>
 			</div>
 		</div>

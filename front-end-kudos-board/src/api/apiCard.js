@@ -49,5 +49,24 @@ export const apiCard = {
             },
             body: JSON.stringify({ message, gif, author }),
         });
-    }
+    },
+    getComments: async (boardId, cardId) => {
+        const response = await fetch(
+            `${import.meta.env.VITE_BASE_URL}/board/${boardId}/card/${cardId}/comment`
+        );
+        const data = await response.json();
+        return data;
+    },
+    addComment: async (boardId, cardId, { message, author }) => {
+        await fetch(
+            `${import.meta.env.VITE_BASE_URL}/board/${boardId}/card/${cardId}/comment`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ message, author }),
+            }
+        );
+    },
 };

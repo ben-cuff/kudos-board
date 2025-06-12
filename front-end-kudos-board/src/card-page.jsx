@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { apiCard } from "./api/apiCard";
 import "./card-page.css";
 import CreateTheme from "./components/board/create-theme";
@@ -24,7 +24,6 @@ export default function CardPage() {
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
 	const [selectedGif, setSelectedGif] = useState("");
 
-	const navigate = useNavigate();
 	const { colors } = useTheme();
 
 	document.body.style.backgroundColor = colors.background;

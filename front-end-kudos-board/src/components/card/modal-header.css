@@ -1,0 +1,27 @@
+.close-btn {
+	border: none;
+	margin-left: auto;
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.modal-header {
+	position: relative;
+	align-content: center;
+}
+
+.modal-header h3 {
+	text-align: center;
+}
+
+.header-from-gif {
+	display: flex;
+	flex-direction: column;
+}
+
+.gif-container {
+	display: flex;
+	justify-content: center;
+}
