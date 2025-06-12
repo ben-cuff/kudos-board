@@ -1,7 +1,6 @@
-import { GiphyFetch } from "@giphy/js-fetch-api";
 import { Gif, Grid } from "@giphy/react-components";
 import propTypes from "prop-types";
-import { useState } from "react";
+import useCreateCard from "../../hooks/use-create-card";
 import { useTheme } from "../../hooks/use-theme";
 import "./create-card-modal.css";
 
@@ -11,16 +10,9 @@ export default function CreateCardModal({
 	setSelectedGif,
 }) {
 	const { colors } = useTheme();
-	const gf = new GiphyFetch(import.meta.env.VITE_GIPHY_API_KEY);
-	const [searchTerm, setSearchTerm] = useState("");
-	const [gifData, setGifData] = useState(null);
+	const { searchTerm, setSearchTerm, gifData, setGifData, fetchGifs } =
+		useCreateCard();
 
-	const fetchGifs = (offset) => {
-		if (offset >= 6) return Promise.resolve({ data: [] });
-		const limit = Math.min(16, 16 - offset);
-		return gf.search(searchTerm, { offset, limit });
-    };
-    
 	return (
 		<div className="overlay-style">
 			<div
