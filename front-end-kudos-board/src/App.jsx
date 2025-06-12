@@ -1,94 +1,38 @@
-import { useCallback, useEffect, useState } from "react";
-import { apiBoard } from "./api/apiBoard";
+import { useEffect, useState } from "react";
 import "./App.css";
 import BoardList from "./components/board/board-list";
 import CreateModal from "./components/board/create-modal";
+import CreateTheme from "./components/board/create-theme";
 import SearchBar from "./components/board/search-bar";
 import SortButtons from "./components/board/sort-buttons";
-import ChangeTheme from "./components/change-theme";
+import { useBoardData } from "./hooks/use-board-data";
+import { useBoardFilters } from "./hooks/use-board-filters";
 import { useTheme } from "./hooks/use-theme";
 
 function App() {
 	const { colors } = useTheme();
-	const [boardData, setBoardData] = useState([]);
+	const {
+		boardData,
+		fetchBoardData,
+		handleSubmitCreateModal,
+		handleDeleteBoard,
+		setBoardData,
+	} = useBoardData();
+
+	const {
+		categoryInput,
+		setCategoryInput,
+		setSearchInput,
+		handleSearchSubmit,
+	} = useBoardFilters(fetchBoardData, boardData, setBoardData);
+
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
-	const [categoryInput, setCategoryInput] = useState("All");
-	const [searchInput, setSearchInput] = useState("");
 
 	document.body.style.backgroundColor = colors.background;
-
-	const fetchBoardData = useCallback(async () => {
-		const data = await apiBoard.getBoard();
-
-		setBoardData(data);
-	}, []);
-
-	const handleSubmitCreateModal = useCallback(
-		async (e) => {
-			e.preventDefault();
-			const title = e.target.title.value;
-			const category = e.target.category.value;
-			const author = e.target.author.value || "";
-			const image = e.target.image.value || "";
-
-			await apiBoard.addBoard(title, category, author, image);
-
-			e.target.reset();
-			await fetchBoardData();
-			setToggleCreateModal(false);
-		},
-		[fetchBoardData]
-	);
-
-	const handleSearchSubmit = useCallback(async () => {
-		setCategoryInput("All");
-
-		const data = await apiBoard.searchBoard(searchInput);
-
-		setBoardData(data);
-	}, [searchInput]);
-
-	const handleDeleteBoard = useCallback(async (boardId) => {
-		await apiBoard.deleteBoard(boardId);
-		setBoardData((prevData) =>
-			prevData.filter((board) => board.id !== boardId)
-		);
-	}, []);
 
 	useEffect(() => {
 		fetchBoardData();
 	}, [fetchBoardData]);
-
-	useEffect(() => {
-		if (categoryInput === "All") {
-			fetchBoardData();
-		} else if (categoryInput === "Recent") {
-			setBoardData((prevData) =>
-				[...prevData]
-					.sort(
-						(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-					)
-					.slice(0, 6)
-			);
-		} else {
-			(async () => {
-				await fetchBoardsByCategory(categoryInput);
-			})();
-		}
-	}, [categoryInput, fetchBoardData]);
-
-	useEffect(() => {
-		if (searchInput == "") fetchBoardData();
-	}, [searchInput, fetchBoardData]);
-
-	async function fetchBoardsByCategory(category) {
-		try {
-			const data = await apiBoard.getCategoryBoard(category);
-			setBoardData(data);
-		} catch (error) {
-			console.error("Failed to fetch boards by category:", error);
-		}
-	}
 
 	return (
 		<div className="container">
@@ -103,22 +47,10 @@ function App() {
 				categoryInput={categoryInput}
 				setCategoryInput={setCategoryInput}
 			/>
-			<div className="create-theme-container">
-				<button
-					className="create-btn"
-					style={{
-						background: colors.button,
-						color: colors.background,
-					}}
-					onClick={() => {
-						setToggleCreateModal(!toggleCreateModal);
-					}}
-				>
-					Create a New Board
-				</button>
-				<ChangeTheme />
-			</div>
-
+			<CreateTheme
+				setToggleCreateModal={setToggleCreateModal}
+				toggleCreateModal={toggleCreateModal}
+			/>
 			<main>
 				{boardData && (
 					<BoardList
