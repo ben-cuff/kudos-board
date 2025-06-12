@@ -40,7 +40,7 @@ export default function useCardData(boardId) {
 	};
 
 	const handlePinCard = async (cardId) => {
-		apiCard.pinCard(boardId, cardId);
+		await apiCard.pinCard(boardId, cardId);
 		fetchBoardData();
 	};
 
