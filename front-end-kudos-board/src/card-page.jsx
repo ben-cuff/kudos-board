@@ -33,7 +33,12 @@ export default function CardPage() {
 			e.preventDefault();
 			const message = e.target.message.value;
 			const author = e.target.author.value || "";
-			const gif = selectedGif || "";
+			const gif = selectedGif;
+
+			if (!gif) {
+				alert("Please choose a gif");
+				return;
+			}
 
 			await apiCard.createCard(boardId, { message, gif, author });
 			e.target.reset();
