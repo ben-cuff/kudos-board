@@ -4,25 +4,6 @@
 	margin-bottom: 30px;
 }
 
-.header-container {
-	display: relative;
-	text-align: center;
-	justify-content: center;
-}
-
-.header-container h1 {
-	font-size: large;
-}
-
-.back-button {
-	position: absolute;
-	left: 10px;
-	background: none;
-	border: none;
-	font-size: 24px;
-	cursor: pointer;
-}
-
 .create-theme-container {
 	display: flex;
 	justify-content: space-around;

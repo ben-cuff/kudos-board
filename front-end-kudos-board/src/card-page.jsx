@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { apiCard } from "./api/apiCard";
 import "./card-page.css";
 import CreateTheme from "./components/board/create-theme";
+import CardHeader from "./components/card/card-header";
 import CardList from "./components/card/card-list";
 import CreateCardModal from "./components/card/create-card-modal";
 import useCardData from "./hooks/use-card-data";
@@ -45,18 +46,7 @@ export default function CardPage() {
 
 	return (
 		<div className="container">
-			<header className="header-container">
-				<button
-					className="back-button"
-					style={{
-						color: colors.primary,
-					}}
-					onClick={() => navigate(-1)}
-				>
-					←
-				</button>
-				<h1 style={{ color: colors.primary }}>👏Kudos Board👏</h1>
-			</header>
+			<CardHeader />
 			<CreateTheme
 				setToggleCreateModal={setToggleCreateModal}
 				toggleCreateModal={toggleCreateModal}
