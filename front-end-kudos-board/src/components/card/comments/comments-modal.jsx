@@ -1,10 +1,11 @@
 import propTypes from "prop-types";
+import { useEffect } from "react";
 import useComments from "../../../hooks/use-comments";
 import { useTheme } from "../../../hooks/use-theme";
-import ModalHeader from "./modal-header";
 import CommentsForm from "./comments-form";
 import CommentsList from "./comments-list";
 import "./comments-modal.css";
+import ModalHeader from "./modal-header";
 
 export default function CommentsModal({
 	gifData,
@@ -12,8 +13,19 @@ export default function CommentsModal({
 	card,
 }) {
 	const { colors } = useTheme();
-	const { newComment, setNewComment, comments, handleSubmitComment } =
-		useComments(card);
+	const {
+		newComment,
+		setNewComment,
+		comments,
+		handleSubmitComment,
+		setBoardId,
+		setCardId,
+	} = useComments(card);
+
+	useEffect(() => {
+		setBoardId(card.boardId);
+		setCardId(card.id);
+	}, [card.boardId, card.id, setBoardId, setCardId]);
 
 	return (
 		<div className="overlay-style">

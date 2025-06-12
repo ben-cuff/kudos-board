@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { apiBoard } from "../api/apiBoard";
 
-export function useBoardFilters(fetchBoardData, boardData, setBoardData) {
+// I want to avoid passing hooks as parameters, but do not know the best way to do it.
+// some sort of context would be better, but not entirely sure how to implement it.
+export function useBoardFilters(fetchBoardData, setBoardData) {
 	const [categoryInput, setCategoryInput] = useState("All");
 	const [searchInput, setSearchInput] = useState("");
 

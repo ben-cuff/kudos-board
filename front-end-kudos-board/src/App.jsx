@@ -24,7 +24,7 @@ function App() {
 		setCategoryInput,
 		setSearchInput,
 		handleSearchSubmit,
-	} = useBoardFilters(fetchBoardData, boardData, setBoardData);
+	} = useBoardFilters(fetchBoardData, setBoardData);
 
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
 

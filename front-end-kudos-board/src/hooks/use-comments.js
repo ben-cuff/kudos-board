@@ -1,20 +1,24 @@
 import { useCallback, useEffect, useState } from "react";
 import { apiCard } from "../api/apiCard";
 
-export default function useComments(card) {
+export default function useComments() {
+	const [boardId, setBoardId] = useState(null);
+	const [cardId, setCardId] = useState(null);
 	const [newComment, setNewComment] = useState("");
 	const [comments, setComments] = useState([]);
 
 	const fetchComments = useCallback(async () => {
-		const data = await apiCard.getComments(card.boardId, card.id);
+		if (!boardId || !cardId) return;
+		const data = await apiCard.getComments(boardId, cardId);
 		setComments(data);
-	}, [card]);
+	}, [boardId, cardId]);
 
 	const handleSubmitComment = useCallback(
 		async (e) => {
 			e.preventDefault();
+			if (!boardId || !cardId) return;
 
-			apiCard.addComment(card.boardId, card.id, {
+			await apiCard.addComment(boardId, cardId, {
 				message: newComment,
 				author: e.target.author.value,
 			});
@@ -22,7 +26,7 @@ export default function useComments(card) {
 			fetchComments();
 			setNewComment("");
 		},
-		[card.boardId, card.id, fetchComments, newComment]
+		[boardId, cardId, fetchComments, newComment]
 	);
 
 	useEffect(() => {
@@ -30,6 +34,10 @@ export default function useComments(card) {
 	}, [fetchComments]);
 
 	return {
+		boardId,
+		setBoardId,
+		cardId,
+		setCardId,
 		newComment,
 		setNewComment,
 		comments,

@@ -19,7 +19,7 @@ export default function CardPage() {
 		handleDeleteCard,
 		handleUpvoteCard,
 		handlePinCard,
-	} = useCardData(boardId);
+	} = useCardData();
 
 	const [toggleCreateModal, setToggleCreateModal] = useState(false);
 	const [selectedGif, setSelectedGif] = useState("");
