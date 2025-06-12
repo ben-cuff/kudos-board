@@ -7,9 +7,7 @@ export default function useCreateCard() {
 	const [gifData, setGifData] = useState(null);
 
 	const fetchGifs = (offset) => {
-		if (offset >= 6) return Promise.resolve({ data: [] });
-		const limit = Math.min(16, 16 - offset);
-		return gf.search(searchTerm, { offset, limit });
+        return gf.search(searchTerm, { offset });
     };
     return {
         searchTerm,

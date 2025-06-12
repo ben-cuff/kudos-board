@@ -30,3 +30,8 @@ form button {
 	border: none;
 	border-radius: 4px;
 }
+
+.grid-container {
+	max-height: 300px;
+	overflow-y: scroll;
+}

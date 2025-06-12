@@ -33,17 +33,19 @@ export default function CreateCardForm({
 				placeholder="gif from giphy"
 			/>
 			{searchTerm && !gifData && (
-				<Grid
-					width={300}
-					columns={4}
-					onGifClick={(gif) => {
-						setSelectedGif(gif.id);
-						setGifData(gif);
-					}}
-					fetchGifs={fetchGifs}
-					key={searchTerm}
-					noLink={true}
-				/>
+				<div className="grid-container">
+					<Grid
+						width={200}
+						columns={3}
+						onGifClick={(gif) => {
+							setSelectedGif(gif.id);
+							setGifData(gif);
+						}}
+						fetchGifs={fetchGifs}
+						key={searchTerm}
+						noLink={true}
+					/>
+				</div>
 			)}
 			{gifData && (
 				<div className="selected-gif-container">
