@@ -3,7 +3,7 @@ import { useTheme } from "../../hooks/use-theme";
 import "./card-header.css";
 
 export default function CardHeader() {
-	const { navigate } = useNavigate();
+	const navigate = useNavigate();
 	const { colors } = useTheme();
 	return (
 		<header className="header-container">
