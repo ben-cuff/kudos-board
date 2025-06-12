@@ -1,7 +1,7 @@
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export const apiBoard = {
-	getBoard: async () => {
+	getBoards: async () => {
 		const response = await fetch(`${baseUrl}/board`);
 		const data = await response.json();
 		return data;
@@ -30,13 +30,19 @@ export const apiBoard = {
 				"Content-Type": "application/json",
 			},
 		});
-    },
-    
-    getCategoryBoard: async (category) => {
-        const response = await fetch(
-            `${baseUrl}/board?category=${category.toUpperCase()}`
-        );
-        const data = await response.json();
-        return data;
-    },
+	},
+
+	getCategoryBoard: async (category) => {
+		const response = await fetch(
+			`${baseUrl}/board?category=${category.toUpperCase()}`
+		);
+		const data = await response.json();
+		return data;
+	},
+
+	getBoard: async (boardId) => {
+		const response = await fetch(`${baseUrl}/board/${boardId}`);
+		const data = await response.json();
+		return data;
+	},
 };

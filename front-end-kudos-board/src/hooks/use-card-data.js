@@ -1,0 +1,59 @@
+import { useCallback, useEffect, useState } from "react";
+import { apiBoard } from "../api/apiBoard";
+import { apiCard } from "../api/apiCard";
+
+export default function useCardData(boardId) {
+	const [boardData, setBoardData] = useState({});
+	const [cardData, setCardData] = useState([]);
+
+	const fetchBoardData = useCallback(async () => {
+		try {
+			const [dataBoard, dataCard] = await Promise.all([
+				apiBoard.getBoard(boardId),
+				apiCard.getCards(boardId),
+			]);
+
+			setBoardData(dataBoard);
+			setCardData(dataCard);
+		} catch (error) {
+			console.error("Error fetching board and card data:", error);
+		}
+	}, [boardId]);
+
+	const handleDeleteCard = async (cardId) => {
+		await apiCard.deleteCard(cardId);
+		setCardData((prevData) =>
+			prevData.filter((card) => card.id !== cardId)
+		);
+	};
+
+	const handleUpvoteCard = async (cardId) => {
+		// this is the intended implementation where you can upvote multiple times
+		await apiCard.upvoteCard(boardId, cardId);
+		setCardData((prevData) =>
+			prevData.map((card) =>
+				card.id === cardId
+					? { ...card, upvotes: card.upvotes + 1 }
+					: card
+			)
+		);
+	};
+
+	const handlePinCard = async (cardId) => {
+		apiCard.pinCard(boardId, cardId);
+		fetchBoardData();
+	};
+
+	useEffect(() => {
+		fetchBoardData();
+	}, [fetchBoardData]);
+
+	return {
+		boardData,
+		cardData,
+		fetchBoardData,
+		handleDeleteCard,
+		handleUpvoteCard,
+		handlePinCard,
+	};
+}

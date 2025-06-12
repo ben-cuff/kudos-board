@@ -5,7 +5,7 @@ export function useBoardData() {
 	const [boardData, setBoardData] = useState([]);
 
 	const fetchBoardData = useCallback(async () => {
-		const data = await apiBoard.getBoard();
+		const data = await apiBoard.getBoards();
 		setBoardData(data);
 	}, []);
 
