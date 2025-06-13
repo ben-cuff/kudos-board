@@ -7,7 +7,12 @@ export default function CommentsForm({
 	handleSubmitComment,
 }) {
 	return (
-		<form onSubmit={handleSubmitComment}>
+		<form
+			onSubmit={(e) => {
+				e.preventDefault();
+				handleSubmitComment(e.target.author.value);
+			}}
+		>
 			<textarea
 				value={newComment}
 				onChange={(e) => setNewComment(e.target.value)}

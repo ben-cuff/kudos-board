@@ -14,13 +14,12 @@ export default function useComments() {
 	}, [boardId, cardId]);
 
 	const handleSubmitComment = useCallback(
-		async (e) => {
-			e.preventDefault();
+		async (author) => {
 			if (!boardId || !cardId) return;
 
 			await apiCard.addComment(boardId, cardId, {
 				message: newComment,
-				author: e.target.author.value,
+				author,
 			});
 
 			fetchComments();
