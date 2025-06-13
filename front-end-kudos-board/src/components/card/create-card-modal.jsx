@@ -18,7 +18,14 @@ export default function CreateCardModal({
 			>
 				<h2>Create New Card</h2>
 				<CreateCardForm
-					handleSubmitCreateModal={handleSubmitCreateModal}
+					handleSubmitCreateModal={(e) => {
+						e.preventDefault();
+						handleSubmitCreateModal(
+							e.target.message.value,
+							e.target.author.value || ""
+						);
+						e.target.reset();
+					}}
 					setSelectedGif={setSelectedGif}
 				/>
 				<button

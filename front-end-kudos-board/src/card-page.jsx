@@ -31,10 +31,8 @@ export default function CardPage() {
 	}, [colors]);
 
 	const handleSubmitCreateModal = useCallback(
-		async (e) => {
-			e.preventDefault();
-			const message = e.target.message.value;
-			const author = e.target.author.value || "";
+		async (message, author) => {
+
 			const gif = selectedGif;
 
 			if (!gif) {
@@ -43,7 +41,7 @@ export default function CardPage() {
 			}
 
 			await apiCard.createCard(boardId, { message, gif, author });
-			e.target.reset();
+			
 			await fetchBoardData();
 			setToggleCreateModal(false);
 		},
