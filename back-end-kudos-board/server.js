@@ -22,9 +22,8 @@ app.get("/board", async (req, res) => {
 
 		if (category) {
 			if (!CATEGORIES.includes(category)) {
-				return res
-					.status(400)
-					.json({ error: "Invalid category provided" });
+				res.status(400).json({ error: "Invalid category provided" });
+				return;
 			}
 			where.category = category;
 		}
@@ -53,10 +52,12 @@ app.get("/board", async (req, res) => {
 app.get("/board/:boardId", async (req, res) => {
 	try {
 		const { boardId } = req.params;
+
 		if (!boardId) {
-			return res.status(400).json({
+			res.status(400).json({
 				error: "Missing board ID in path parameter",
 			});
+			return;
 		}
 
 		const board = await prisma.board.findUnique({
@@ -81,6 +82,7 @@ app.get("/board/:boardId", async (req, res) => {
 app.post("/board", async (req, res) => {
 	try {
 		const { title, image, category, author } = req.body;
+
 		if (!title || !image || !category) {
 			res.status(400).json({
 				error: "Missing required fields: title, image, or category",
@@ -108,6 +110,7 @@ app.post("/board", async (req, res) => {
 app.delete("/board/:boardId", async (req, res) => {
 	try {
 		const { boardId } = req.params;
+
 		if (!boardId) {
 			res.status(400).json({
 				error: "Missing board ID in path parameter",
@@ -162,6 +165,7 @@ app.delete("/board/:boardId", async (req, res) => {
 app.get("/board/:boardId/card", async (req, res) => {
 	try {
 		const { boardId } = req.params;
+
 		if (!boardId) {
 			res.status(400).json({
 				error: "Missing board ID in path parameter",
@@ -193,6 +197,7 @@ app.get("/board/:boardId/card", async (req, res) => {
 app.post("/board/:boardId/card", async (req, res) => {
 	try {
 		const { boardId } = req.params;
+
 		if (!boardId) {
 			res.status(400).json({
 				error: "Missing board ID in path parameter",
@@ -215,7 +220,7 @@ app.post("/board/:boardId/card", async (req, res) => {
 			upvotes = 0,
 			pinned = false,
 			pinnedAt,
-			author
+			author,
 		} = req.body;
 
 		if (!message || !gif) {
@@ -254,6 +259,7 @@ app.post("/board/:boardId/card", async (req, res) => {
 app.get("/board/:boardId/card/:cardId", async (req, res) => {
 	try {
 		const { boardId, cardId } = req.params;
+
 		if (!boardId || !cardId) {
 			return res.status(400).json({
 				error: "Missing board or card ID in path parameters",
@@ -378,6 +384,7 @@ app.patch("/board/:boardId/card/:cardId/pin", async (req, res) => {
 app.delete("/board/:boardId/card/:cardId", async (req, res) => {
 	try {
 		const { boardId, cardId } = req.params;
+
 		if (!boardId || !cardId) {
 			return res.status(400).json({
 				error: "Missing board or card ID in path parameters",
@@ -416,6 +423,7 @@ app.delete("/board/:boardId/card/:cardId", async (req, res) => {
 app.post("/board/:boardId/card/:cardId/comment", async (req, res) => {
 	try {
 		const { boardId, cardId } = req.params;
+
 		if (!boardId || !cardId) {
 			return res.status(400).json({
 				error: "Missing board or card ID in path parameters",
@@ -446,6 +454,7 @@ app.post("/board/:boardId/card/:cardId/comment", async (req, res) => {
 				cardId: Number(cardId),
 			},
 		});
+		
 		res.status(201).json(comment);
 	} catch (error) {
 		res.status(500).json({
