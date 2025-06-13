@@ -83,9 +83,9 @@ app.post("/board", async (req, res) => {
 	try {
 		const { title, image, category, author } = req.body;
 
-		if (!title || !image || !category) {
+		if (!title || !category) {
 			res.status(400).json({
-				error: "Missing required fields: title, image, or category",
+				error: "Missing required fields: title, or category",
 			});
 			return;
 		}
