@@ -10,15 +10,8 @@ export function useBoardData() {
 	}, []);
 
 	const handleSubmitCreateModal = useCallback(
-		async (e) => {
-			const title = e.target.title.value;
-			const category = e.target.category.value;
-			const author = e.target.author.value || "";
-			const image = e.target.image.value || "";
-
+		async (title, category, author, image) => {
 			await apiBoard.addBoard(title, category, author, image);
-
-			e.target.reset();
 			await fetchBoardData();
 		},
 		[fetchBoardData]

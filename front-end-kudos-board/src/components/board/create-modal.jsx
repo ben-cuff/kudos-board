@@ -15,7 +15,13 @@ export default function CreateModal({
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
-						handleSubmitCreateModal(e);
+						handleSubmitCreateModal(
+							e.target.title.value,
+							e.target.category.value,
+							e.target.author.value || "",
+							e.target.image.value || ""
+						);
+						e.target.reset();
 						setToggleCreateModal(false);
 					}}
 				>
