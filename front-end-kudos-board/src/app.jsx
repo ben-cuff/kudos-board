@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import "./app.css";
 import BoardList from "./components/board/board-list";
 import CreateModal from "./components/board/create-modal";
 import CreateTheme from "./components/board/create-theme";

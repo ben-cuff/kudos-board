@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
-import App from "./App.jsx";
+import App from "./app.jsx";
 import CardPage from "./card-page.jsx";
 import { ThemeProvider } from "./context/theme-content.jsx";
 import "./index.css";
