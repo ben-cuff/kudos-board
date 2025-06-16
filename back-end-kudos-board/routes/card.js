@@ -5,8 +5,6 @@ router.get("/board/:boardId/card", async (req, res) => {
 	try {
 		const { boardId } = req.params;
 
-		console.log("Fetching cards for board ID:", boardId);
-
 		if (!boardId) {
 			res.status(400).json({
 				error: "Missing board ID in path parameter",
