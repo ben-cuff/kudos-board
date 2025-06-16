@@ -22,10 +22,14 @@ const colorThemes = {
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-	const [theme, setTheme] = useState("light");
+	const [theme, setTheme] = useState(() => {
+		const savedTheme = localStorage.getItem("theme");
+		return savedTheme || "light";
+	});
 
 	const toggleTheme = () => {
 		const nextTheme = theme === "dark" ? "light" : "dark";
+		localStorage.setItem("theme", nextTheme);
 		setTheme(nextTheme);
 	};
 
