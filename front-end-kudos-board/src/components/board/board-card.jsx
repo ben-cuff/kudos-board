@@ -1,16 +1,18 @@
 import propTypes from "prop-types";
 import { useNavigate } from "react-router";
+import { CATEGORY_MAP } from "../../constants/categorys";
 import useTheme from "../../hooks/use-theme";
 import "./board-card.css";
 
 export default function BoardCard({ board, handleDeleteBoard }) {
 	const navigate = useNavigate();
 	const { colors } = useTheme();
+
 	return (
 		<div className="board-card" style={{ background: colors.card }}>
 			<img src={board.image} alt={board.title} className="board-image" />
 			<h2 className="board-title">{board.title}</h2>
-			<h3 className="board-category">{board.category}</h3>
+			<h3 className="board-category">{CATEGORY_MAP[board.category]}</h3>
 			<div className="btns-container">
 				<button
 					onClick={() => navigate(`/${board.id}`)}
