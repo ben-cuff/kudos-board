@@ -14,7 +14,7 @@ export default function CreateCardModal({
 		<div className="overlay-style">
 			<div
 				className="modal-style"
-				style={{ background: colors.background }}
+				style={{ background: colors.background, color: colors.primary }}
 			>
 				<h2>Create New Card</h2>
 				<CreateCardForm
