@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { useTheme } from "../../hooks/use-theme";
+import useTheme from "../../hooks/use-theme";
 import ChangeTheme from "../change-theme";
 import "./create-theme.css";
 

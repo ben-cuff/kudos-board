@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { apiCard } from "./api/apiCard";
+import { apiCard } from "./api/api-card";
 import "./card-page.css";
 import CreateTheme from "./components/board/create-theme";
 import CardHeader from "./components/card/card-header";
 import CardList from "./components/card/card-list";
 import CreateCardModal from "./components/card/create-card-modal";
 import useCardData from "./hooks/use-card-data";
-import { useTheme } from "./hooks/use-theme";
+import useTheme from "./hooks/use-theme";
 
 export default function CardPage() {
 	const { boardId } = useParams();
@@ -32,7 +32,6 @@ export default function CardPage() {
 
 	const handleSubmitCreateModal = useCallback(
 		async (message, author) => {
-
 			const gif = selectedGif;
 
 			if (!gif) {
@@ -41,7 +40,7 @@ export default function CardPage() {
 			}
 
 			await apiCard.createCard(boardId, { message, gif, author });
-			
+
 			await fetchBoardData();
 			setToggleCreateModal(false);
 		},

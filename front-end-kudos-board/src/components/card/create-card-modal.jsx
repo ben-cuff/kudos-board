@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { useTheme } from "../../hooks/use-theme";
+import useTheme from "../../hooks/use-theme";
 import CreateCardForm from "./create-card-form";
 import "./create-card-modal.css";
 

@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import { useEffect } from "react";
 import useComments from "../../../hooks/use-comments";
-import { useTheme } from "../../../hooks/use-theme";
+import useTheme from "../../../hooks/use-theme";
 import CommentsForm from "./comments-form";
 import CommentsList from "./comments-list";
 import "./comments-modal.css";

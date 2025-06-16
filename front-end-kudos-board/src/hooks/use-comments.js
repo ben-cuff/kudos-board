@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { apiCard } from "../api/apiCard";
+import { apiCard } from "../api/api-card";
 
 export default function useComments() {
 	const [boardId, setBoardId] = useState(null);

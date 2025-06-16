@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { useTheme } from "../../hooks/use-theme";
+import useTheme from "../../hooks/use-theme";
 import "./card-header.css";
 
 export default function CardHeader() {

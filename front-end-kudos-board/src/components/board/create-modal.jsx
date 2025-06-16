@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { useTheme } from "../../hooks/use-theme";
+import useTheme from "../../hooks/use-theme";
 import "./create-modal.css";
 
 export default function CreateModal({

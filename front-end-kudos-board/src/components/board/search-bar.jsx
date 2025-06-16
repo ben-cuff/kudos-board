@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { useTheme } from "../../hooks/use-theme";
+import useTheme from "../../hooks/use-theme";
 import "./search-bar.css";
 
 export default function SearchBar({ setSearchInput, handleSearchSubmit }) {

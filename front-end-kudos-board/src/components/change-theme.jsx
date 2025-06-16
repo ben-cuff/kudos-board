@@ -1,4 +1,4 @@
-import { useTheme } from "../hooks/use-theme";
+import useTheme from "../hooks/use-theme";
 import "./change-theme.css";
 
 export default function ChangeTheme() {

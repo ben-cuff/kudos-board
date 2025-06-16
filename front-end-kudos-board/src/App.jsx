@@ -5,9 +5,9 @@ import CreateModal from "./components/board/create-modal";
 import CreateTheme from "./components/board/create-theme";
 import SearchBar from "./components/board/search-bar";
 import SortButtons from "./components/board/sort-buttons";
-import { useBoardData } from "./hooks/use-board-data";
-import { useBoardFilters } from "./hooks/use-board-filters";
-import { useTheme } from "./hooks/use-theme";
+import useBoardData from "./hooks/use-board-data";
+import useBoardFilters from "./hooks/use-board-filters";
+import useTheme from "./hooks/use-theme";
 
 function App() {
 	const { colors } = useTheme();
@@ -31,10 +31,6 @@ function App() {
 	useEffect(() => {
 		document.body.style.backgroundColor = colors.background;
 	}, [colors]);
-
-	useEffect(() => {
-		fetchBoardData();
-	}, [fetchBoardData]);
 
 	return (
 		<div className="container">

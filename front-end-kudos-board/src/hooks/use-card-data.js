@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { apiBoard } from "../api/apiBoard";
-import { apiCard } from "../api/apiCard";
+import { apiBoard } from "../api/api-board";
+import { apiCard } from "../api/api-card";
 
 export default function useCardData() {
 	const { boardId } = useParams();

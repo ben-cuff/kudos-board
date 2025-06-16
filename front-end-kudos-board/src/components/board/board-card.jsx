@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import { useNavigate } from "react-router";
-import { useTheme } from "../../hooks/use-theme";
+import useTheme from "../../hooks/use-theme";
 import "./board-card.css";
 
 export default function BoardCard({ board, handleDeleteBoard }) {

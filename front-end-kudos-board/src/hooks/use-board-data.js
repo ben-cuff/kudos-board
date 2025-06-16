@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { apiBoard } from "../api/apiBoard";
+import { apiBoard } from "../api/api-board";
 
-export function useBoardData() {
+export default function useBoardData() {
 	const [boardData, setBoardData] = useState([]);
 
 	const fetchBoardData = useCallback(async () => {

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useTheme } from "../../hooks/use-theme";
+import useTheme from "../../hooks/use-theme";
 import "./sort-buttons.css";
 
 export default function SortButtons({ categoryInput, setCategoryInput }) {

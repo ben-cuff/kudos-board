@@ -2,7 +2,7 @@ import { GiphyFetch } from "@giphy/js-fetch-api";
 import { Gif } from "@giphy/react-components";
 import propTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { useTheme } from "../../hooks/use-theme";
+import useTheme from "../../hooks/use-theme";
 import "./card.css";
 import CommentsModal from "./comments/comments-modal";
 
