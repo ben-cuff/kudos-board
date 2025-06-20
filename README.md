@@ -2,7 +2,7 @@
 
 Submitted by: **Ben Cuff**
 
-Deployed Application (**required**): [Kudos Board Deployed Site](https://kudos-board-q7sq.onrender.com)
+Deployed Application (**required**): [Kudos Board Deployed Site](https://kudos-board-q7sq.onrender.com) (backend may need a minute to spin up)
 
 ### Application Features
 
