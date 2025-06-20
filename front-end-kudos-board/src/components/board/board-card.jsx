@@ -17,7 +17,7 @@ export default function BoardCard({ board, handleDeleteBoard }) {
 				<button
 					onClick={() => navigate(`/${board.id}`)}
 					style={{
-						background: colors.secondary,
+						background: colors.primary,
 						color: colors.background,
 					}}
 				>
@@ -26,7 +26,7 @@ export default function BoardCard({ board, handleDeleteBoard }) {
 				<button
 					onClick={() => handleDeleteBoard(board.id)}
 					style={{
-						background: colors.secondary,
+						background: colors.primary,
 						color: colors.background,
 					}}
 				>
