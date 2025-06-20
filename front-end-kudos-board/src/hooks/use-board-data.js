@@ -7,6 +7,7 @@ export default function useBoardData() {
 	const fetchBoardData = useCallback(async () => {
 		const data = await apiBoard.getBoards();
 		setBoardData(data);
+		return data;
 	}, []);
 
 	const handleSubmitCreateModal = useCallback(

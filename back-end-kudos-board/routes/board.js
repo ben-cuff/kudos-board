@@ -1,7 +1,7 @@
 const router = require("express").Router();
+const prisma = require("../prisma");
 
 const CATEGORIES = ["CELEBRATION", "THANK_YOU", "INSPIRATION"];
-const prisma = require("../prisma");
 
 router.get("/board", async (req, res) => {
 	try {

@@ -29,13 +29,13 @@ export default function useBoardFilters(fetchBoardData, setBoardData) {
 		if (categoryInput === "All") {
 			fetchBoardData();
 		} else if (categoryInput === "Recent") {
-			setBoardData((prevData) =>
-				[...prevData]
-					.sort(
-						(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-					)
-					.slice(0, 6)
-			);
+			fetchBoardData().then((data) => {
+				setBoardData(
+					[...data]
+						.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+						.slice(0, 6)
+				);
+			});
 		} else {
 			fetchBoardsByCategory(categoryInput);
 		}
