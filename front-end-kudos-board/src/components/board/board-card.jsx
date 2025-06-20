@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import { useNavigate } from "react-router";
-import { CATEGORY_MAP } from "../../constants/categorys";
+import { CATEGORY_MAP } from "../../constants/categories";
 import useTheme from "../../hooks/use-theme";
 import "./board-card.css";
 
