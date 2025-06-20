@@ -13,6 +13,10 @@ export default function SortButtons({ categoryInput, setCategoryInput }) {
 		"Inspiration",
 	];
 
+	const displayNames = {
+		Thank_You: "Thank You",
+	};
+
 	return (
 		<div className="btns-container">
 			{filters.map((filter) => (
@@ -28,7 +32,7 @@ export default function SortButtons({ categoryInput, setCategoryInput }) {
 						background: colors.card,
 					}}
 				>
-					{filter}
+					{displayNames[filter] || filter}
 				</button>
 			))}
 		</div>
