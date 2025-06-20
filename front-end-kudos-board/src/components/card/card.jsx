@@ -41,7 +41,13 @@ export default function Card({
 					card={card}
 				/>
 			)}
-			<div className="card" style={{ background: colors.card }}>
+			<div
+				className="card"
+				style={{
+					background: colors.card,
+					border: card.pinned ? "3px solid blue" : undefined,
+				}}
+			>
 				{gifData ? (
 					<Gif gif={gifData} width={180} noLink={true} />
 				) : (

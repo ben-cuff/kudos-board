@@ -49,7 +49,13 @@ function App() {
 				setToggleCreateModal={setToggleCreateModal}
 				toggleCreateModal={toggleCreateModal}
 			/>
-			<main>
+			<main
+				style={{
+					borderTop: `1px solid ${
+						colors.secondary || colors.primary
+					}`,
+				}}
+			>
 				{boardData && (
 					<BoardList
 						boardData={boardData}
@@ -62,7 +68,9 @@ function App() {
 				style={{
 					background: colors.background,
 					color: colors.primary,
-					borderTop: `1px solid ${colors.primary}`,
+					borderTop: `1px solid ${
+						colors.secondary || colors.primary
+					}`,
 				}}
 			>
 				© 2025 Kudos
