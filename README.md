@@ -133,7 +133,7 @@ Deployed Application (**required**): [Kudos Board Deployed Site](https://kudos-b
 
 ### Walkthrough Video
 
-[Watch the walkthrough video on Loom](https://www.loom.com/share/eada5a647b384e85a1f92a8fe95ef07d?sid=09de66b9-d80c-48ab-8580-a48b0a497ab4)
+[Watch the walkthrough video on Loom](https://www.loom.com/share/8561e686357847b58390fe0be4d80d5e)
 
 ### Reflection
 

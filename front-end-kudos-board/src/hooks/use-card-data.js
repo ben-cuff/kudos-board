@@ -23,7 +23,7 @@ export default function useCardData() {
 	}, [boardId]);
 
 	const handleDeleteCard = async (cardId) => {
-		await apiCard.deleteCard(cardId);
+		await apiCard.deleteCard(boardId, cardId);
 		setCardData((prevData) =>
 			prevData.filter((card) => card.id !== cardId)
 		);
