@@ -2,7 +2,7 @@
 
 Submitted by: **Ben Cuff**
 
-Deployed Application (**required**): [Kudos Board Deployed Site](https://kudos-board-ws.onrender.com) (backend may need a minute to spin up)
+Deployed Application (**required**): [Kudos Board Deployed Site](https://kudos-board-ws.onrender.com) (may need a minute to spin up)
 
 ### Application Features
 
@@ -133,9 +133,7 @@ Deployed Application (**required**): [Kudos Board Deployed Site](https://kudos-b
 
 ### Walkthrough Video
 
-[![Watch Walkthrough Video](https://cdn.loom.com/sessions/thumbnails/d6f897328f394c9599a11285754cefce-with-play.gif)](https://www.loom.com/embed/d6f897328f394c9599a11285754cefce?sid=3c75e7d9-42c9-41f0-bdf7-bbee85583410)
-
-[Watch the walkthrough video on Loom](https://www.loom.com/embed/d6f897328f394c9599a11285754cefce?sid=3c75e7d9-42c9-41f0-bdf7-bbee85583410)
+[Watch the walkthrough video on Loom](https://www.loom.com/share/eada5a647b384e85a1f92a8fe95ef07d?sid=09de66b9-d80c-48ab-8580-a48b0a497ab4)
 
 ### Reflection
 

@@ -21,7 +21,7 @@ export default function CreateTheme({
 					setToggleCreateModal(!toggleCreateModal);
 				}}
 			>
-				Create a New Board
+				Create New
 			</button>
 			<ChangeTheme />
 		</div>
