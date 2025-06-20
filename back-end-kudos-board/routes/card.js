@@ -252,12 +252,8 @@ router.delete("/board/:boardId/card/:cardId", async (req, res) => {
 			return;
 		}
 
-		await prisma.card.delete({ where: { id: Number(cardId) } });
-		await prisma.comment
-			.deleteMany({
-				where: { cardId: Number(cardId) },
-			})
-			.catch(() => {});
+
+		await prisma.card.delete({ where: { id: Number(card.id) } });
 
 		res.status(200).json(card);
 	} catch (error) {

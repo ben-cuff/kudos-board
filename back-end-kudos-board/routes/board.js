@@ -107,31 +107,6 @@ router.delete("/board/:boardId", async (req, res) => {
 		}
 
 		try {
-			const cards = await prisma.card.findMany({
-				where: { boardId: Number(boardId) },
-				select: { id: true },
-			});
-			const cardIds = cards.map((card) => card.id);
-
-			if (cardIds.length > 0) {
-				await prisma.comment
-					.deleteMany({
-						where: { cardId: { in: cardIds } },
-					})
-					.catch(() => {});
-				await prisma.card
-					.deleteMany({
-						where: { boardId: Number(boardId) },
-					})
-					.catch(() => {});
-			} else {
-				await prisma.card
-					.deleteMany({
-						where: { boardId: Number(boardId) },
-					})
-					.catch(() => {});
-			}
-
 			const deletedBoard = await prisma.board.delete({
 				where: { id: Number(boardId) },
 			});
